@@ -3,43 +3,32 @@
     <q-header elevated>
       <q-toolbar>
 
+        <q-btn
+          v-if="$route.fullPath.includes('/chat')"
+          v-go-back.single
+          icon="arrow_back"
+          flat
+          dense
+          label="Back" />
+
         <q-toolbar-title class="absolute-center">
-          InformaVirus
+          {{ title }}
         </q-toolbar-title>
+
+        <q-btn
+          to="/auth"
+          class="absolute-right q-pr-sm"
+          icon="account_circle"
+          no-caps
+          flat
+          dense
+          label="Login" />
 
       </q-toolbar>
     </q-header>
 
     <q-page-container>
-      <q-card>
-        <q-tabs
-          v-model="tab"
-          dense
-          class="text-grey"
-          active-color="primary"
-          indicator-color="primary"
-          align="justify"
-          narrow-indicator
-        >
-          <q-tab name="login" label="Login" />
-          <q-tab name="register" label="Register" />
-        </q-tabs>
-
-        <q-separator />
-
-        <q-tab-panels v-model="tab" animated>
-          <q-tab-panel name="login">
-            <div class="text-h6">Login</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </q-tab-panel>
-
-          <q-tab-panel name="register">
-            <div class="text-h6">Register</div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          </q-tab-panel>
-
-        </q-tab-panels>
-      </q-card>
+      <router-view />
     </q-page-container>
   </q-layout>
 </template>
@@ -52,7 +41,8 @@ export default {
     title() {
       console.log(this.$route)
       let currentPath = this.$route.fullPath
-      if (currentPath == '/') return 'informavirus'
+      if (currentPath == '/') return 'SmackChat'
+      else if (currentPath == '/chat') return 'Chat'
       else if (currentPath == '/auth') return 'Login'
     }
   },

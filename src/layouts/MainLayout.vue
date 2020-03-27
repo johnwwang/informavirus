@@ -10,7 +10,7 @@
           aria-label="Menu"
           @click="leftDrawerOpen = !leftDrawerOpen"
         />
-jnjnjnjk
+
         <q-toolbar-title>
           Quasar App
         </q-toolbar-title>

@@ -1,6 +1,6 @@
-# Quasar App (informavirus-q)
+# Informavirus (informavirus)
 
-A Quasar Framework app
+App
 
 ## Install the dependencies
 ```bash

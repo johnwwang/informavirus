@@ -1,11 +1,11 @@
 {
-  "name": "informavirus-q",
+  "name": "informavirus",
   "version": "0.0.1",
-  "description": "A Quasar Framework app",
-  "productName": "Quasar App",
+  "description": "App",
+  "productName": "Informavirus",
   "cordovaId": "org.cordova.quasar.app",
   "capacitorId": "",
-  "author": "Daniel <schwartzray8@gmail.com>",
+  "author": "Jwing6872 <johnwang58@gmail.com>",
   "private": true,
   "scripts": {
     "test": "echo \"No test specified\" && exit 0"

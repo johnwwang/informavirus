@@ -1,6 +1,13 @@
 .DS_Store
 .thumbs.db
 node_modules
+.editorconfig
+.eslintignore
+.eslintrc.js
+.postcssrc.js
+.stylintrc
+src/boot/
+src/i18n
 
 # Quasar core related directories
 .quasar

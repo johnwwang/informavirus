@@ -1,5 +1,5 @@
 <template>
-  <q-form>
+  <q-form @submit="submitForm">
     <q-input 
       v-if="tab == 'register'"
       class="flex q-pa-md"
@@ -22,6 +22,7 @@
       <q-btn 
       unelevated 
       rounded color="primary" 
+      type="submit"
       :label="tab" />
     </div>
   </q-form>
@@ -36,6 +37,16 @@ export default {
         name: '',
         email: '',
         password: ''
+      }
+    }
+  },
+  methods: {
+    submitForm () {
+      if (this.tab == 'login') {
+        console.log('login user')
+      }
+      else {
+        console.log('register the user')
       }
     }
   }

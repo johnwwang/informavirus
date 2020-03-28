@@ -1,6 +1,7 @@
 <template>
   <q-form>
     <q-input 
+      v-if="tab == 'register'"
       class="flex q-pa-md"
       rounded outlined 
       v-model="formData.name" 
@@ -17,6 +18,12 @@
       v-model="formData.password" 
       label="Password"
       type="password" />
+    <div align="center">
+      <q-btn 
+      unelevated 
+      rounded color="primary" 
+      :label="tab" />
+    </div>
   </q-form>
 </template>
 

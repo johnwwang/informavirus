@@ -18,12 +18,10 @@
 
       <q-tab-panels v-model="tab" animated>
         <q-tab-panel name="login">
-          <h5>Login</h5>
           <login-register :tab="tab" />
         </q-tab-panel>
 
         <q-tab-panel name="register">
-          <h5> Register</h5>
           <login-register :tab="tab" />
         </q-tab-panel>
 
@@ -39,9 +37,9 @@
 	      tab: 'login'
 	    }
 	  },
-	  // components: {
-	  // 	'login-register' : require('components/LoginRegister.vue').default
-	  // }
+	  components: {
+	  	'login-register' : require('components/LoginRegister.vue').default
+	  }
 	}
 </script>
 

@@ -2,15 +2,6 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar>
-
-        <q-btn
-          v-if="$route.fullPath.includes('/chat')"
-          v-go-back.single
-          icon="arrow_back"
-          flat
-          dense
-          label="Back" />
-
         <q-toolbar-title class="absolute-center">
           {{ title }}
         </q-toolbar-title>
@@ -41,8 +32,7 @@ export default {
     title() {
       console.log(this.$route)
       let currentPath = this.$route.fullPath
-      if (currentPath == '/') return 'SmackChat'
-      else if (currentPath == '/chat') return 'Chat'
+      if (currentPath == '/') return 'InformaVirus'
       else if (currentPath == '/auth') return 'Login'
     }
   },

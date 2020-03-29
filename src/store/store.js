@@ -7,7 +7,9 @@ const mutations = {
 }
 
 const actions = {
-
+  registerUser() {
+    console.log("register user action")
+  }
 }
 
 const getters = {

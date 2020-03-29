@@ -1,0 +1,12 @@
+{
+  "users": {
+    "USERID1": {
+      "name": "Danny",
+      "email": "schawrtzray8@gmail.com"
+    },
+    "USERID2": {
+      "name": "Johnny",
+      "email": "johnwang58@gmail.com"
+    }
+  }
+}

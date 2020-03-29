@@ -7,6 +7,7 @@
         </q-toolbar-title>
 
         <q-btn
+          v-if="!userDetails.userId"
           to="/auth"
           class="absolute-right q-pr-sm"
           icon="account_circle"
@@ -14,6 +15,16 @@
           flat
           dense
           label="Login" />
+        <q-btn
+          v-else
+          class="absolute-right q-pr-sm"
+          icon="account_circle"
+          no-caps
+          flat
+          dense>
+          Logout <br>
+          {{ userDetails.name }}
+        </q-btn>
 
       </q-toolbar>
     </q-header>
@@ -25,22 +36,23 @@
 </template>
 
 <script>
-import { openURL } from 'quasar'
+import { mapState } from 'vuex'
 
 export default {
   computed: {
+    ...mapState('store', ['userDetails']),
     title() {
       console.log(this.$route)
       let currentPath = this.$route.fullPath
       if (currentPath == '/') return 'InformaVirus'
       else if (currentPath == '/auth') return 'Login'
     }
-  },
-  methods: {
-    openURL
   }
 }
 </script>
 
-<style>
+<style lang="stylus">
+  .q-toolbar
+    .q-btn
+      line-height: 1.2
 </style>

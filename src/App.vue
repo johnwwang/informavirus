@@ -5,7 +5,14 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
-  name: 'App'
+  methods: {
+    ...mapActions ('store', ['handleAuthStateChanged'])
+  },
+  // WTF IS A VUE.JS LIFECYCLE HOOK
+  mounted () {
+    this.handleAuthStateChanged ()
+  }
 }
 </script>

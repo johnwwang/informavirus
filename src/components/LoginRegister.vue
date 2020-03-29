@@ -20,7 +20,7 @@
       type="password" />
     <div align="center">
       <q-btn 
-      to='/'
+      
       unelevated 
       rounded color="primary" 
       type="submit"
@@ -43,10 +43,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions('store', ['registerUser']),
+    ...mapActions('store', ['registerUser', 'loginUser']),
     submitForm () {
       if (this.tab == 'login') {
-        console.log('login user')
+        this.loginUser(this.formData)
       }
       else {
        this.registerUser(this.formData)

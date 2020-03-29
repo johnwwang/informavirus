@@ -20,6 +20,7 @@
       type="password" />
     <div align="center">
       <q-btn 
+      to="/"
       unelevated 
       rounded color="primary" 
       type="submit"

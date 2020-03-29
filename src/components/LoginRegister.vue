@@ -48,7 +48,7 @@ export default {
         console.log('login user')
       }
       else {
-       this.registerUser()
+       this.registerUser(this.formData)
       }
     }
   }

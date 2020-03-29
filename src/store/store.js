@@ -36,6 +36,9 @@ const actions = {
       console.log(error.message);
     })
   },
+  logoutUser() {
+    firebaseAuth.signOut()
+  },
   handleAuthStateChanged({ commit }) {
     firebaseAuth.onAuthStateChanged(user => {
       if (user) {
@@ -43,6 +46,7 @@ const actions = {
         let userId = firebaseAuth.currentUser.uid
         firebaseDb.ref('users/' + userId).once('value', snapshot => {
           console.log('snapshot', snapshot)
+          this.$router.push('/')
           //WHAT IS A SNAPSHOT -- VIDEO 8 goes over all of this
           let userDetails = snapshot.val()
           console.log('userDetails:', userDetails)
@@ -57,6 +61,7 @@ const actions = {
       else {
         //user is logged out
         commit('setUserDetails', {})
+        this.$router.replace('/auth')
       }
     })
   }

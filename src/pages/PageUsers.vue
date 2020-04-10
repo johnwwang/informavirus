@@ -2,10 +2,27 @@
   <q-page class="flex">
   	<template>
 			<div>
-    		GPS position of {{ userDetails.name }}: 
+    		GPS position of {{ userDetails.name }}:
 				<br> <strong>Latitude: {{ position.coords.latitude }}</strong>
 				<br> <strong>Longitude: {{ position.coords.longitude }}</strong>
   		</div>
+      <div id = "app">
+      <GmapMap
+          :center="{lat:10, lng:10}"
+          :zoom="7"
+          map-type-id="terrain"
+          style="width: 500px; height: 300px"
+        >
+          <GmapMarker
+            :key="index"
+            v-for="(m, index) in markers"
+            :position="m.position"
+            :clickable="true"
+            :draggable="true"
+            @click="center=m.position"
+          />
+      </GmapMap>
+    </div>
   	</template>
 	</q-page>
 </template>
@@ -14,6 +31,23 @@
 import { mapState } from 'vuex'
 import { Plugins } from '@capacitor/core'
 const { Geolocation } = Plugins
+import Vue from 'vue'
+import * as VueGoogleMaps from 'vue2-google-maps'
+
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyA_BBkhxnsIH84FcFxxdrLUkyhHP1rjpws',
+    libraries: 'places', // This is required if you use the Autocomplete plugin
+    // OR: libraries: 'places,drawing'
+    // OR: libraries: 'places,drawing,visualization'
+    // (as you require)
+
+    //// If you want to set the version, you can do so:
+    // v: '3.26',
+  },
+
+})
+
 
 export default {
 	computed: {

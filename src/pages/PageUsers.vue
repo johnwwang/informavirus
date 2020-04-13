@@ -65,9 +65,10 @@ export default {
       Geolocation.getCurrentPosition().then(position => {
         console.log('Current', position);
         this.position = position
-      });
+      })
     }
-	},
+  },
+
 	mounted () {
     this.getCurrentPosition()
 
@@ -75,6 +76,7 @@ export default {
     this.geoId = Geolocation.watchPosition({}, (position, err) => {
       console.log('New GPS position')
       this.position = position
+      this.array.push(position.coords.longitude, position.coords.latitude)
     })
   },
   beforeDestroy () {

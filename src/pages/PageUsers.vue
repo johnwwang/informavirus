@@ -2,13 +2,14 @@
   <q-page class="flex">
   	<template>
 			<div>
-    		GPS position of {{ userDetails.name }}:
+    		GPS position of {{ userDetails.name }}  :
 				<br> <strong>Latitude: {{ position.coords.latitude }}</strong>
 				<br> <strong>Longitude: {{ position.coords.longitude }}</strong>
+        <br> <strong>Array: {{ array }} </strong>
   		</div>
       <div id = "app">
       <GmapMap
-          :center="{lat:10, lng:10}"
+          :center="{lat: position.coords.latitude , lng: position.coords.longitude}"
           :zoom="7"
           map-type-id="terrain"
           style="width: 500px; height: 300px"
@@ -55,7 +56,8 @@ export default {
 	},
 	data () {
     return {
-      position: 'determining...'
+      position: 'determining...',
+      array: []
     }
 	},
 	methods: {

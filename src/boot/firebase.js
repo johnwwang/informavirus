@@ -25,5 +25,6 @@ let firebaseApp = firebase.initializeApp(firebaseConfig);
 
 let firebaseAuth = firebaseApp.auth();
 let firebaseDb = firebaseApp.database();
+let coordinatesRef = firebaseDb.ref('coordinates')
 
-export { firebaseAuth, firebaseDb }
+export { firebaseAuth, firebaseDb, coordinatesRef }

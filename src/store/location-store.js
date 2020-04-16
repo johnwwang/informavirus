@@ -1,4 +1,4 @@
-import firebase from 'firebase'
+import { firebaseAuth, firebaseDb, coordinatesRef } from 'boot/firebase'
 import Vue from 'vue'
 import { uid } from 'quasar'
 
@@ -35,8 +35,11 @@ state = {
 }, 
 
 mutations = {
-  addCoord(state, payload) {
+  addCoord({state}, payload) {
   Vue.set(state.coordinates, payload.id, payload.coord)
+  },
+  removeCoord(state, payload) {
+    Vue.set(state.coordinates, payload.id, payload.coord)
   }
 },
 
@@ -47,10 +50,30 @@ actions = {
       id: coordId,
       coord: coord
     }
+    coordinatesRef().set({
+    longitude: payload.longitude,
+    latitude: payload.latitude
+    })
     commit('addCoord', payload)
+  },
+  removeCoord ({ commit }, coord){
+    let coordId = uid()
+    let payload = {
+      id: coordId,
+      coord: coord
+    }
+    commit('removeCoord', payload)
   }
+
 },
 
 getters = {
 
+}
+export default {
+  namespaced: true,
+  state,
+  mutations,
+  actions,
+  getters
 }

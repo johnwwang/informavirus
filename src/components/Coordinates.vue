@@ -5,7 +5,7 @@
     		GPS position of {{ userDetails.name }}  :
 				<br> <strong>Latitude: {{ position.coords.latitude }}</strong>
 				<br> <strong>Longitude: {{ position.coords.longitude }}</strong>
-        <br> <strong>Array: {{ coordinates }} </strong>
+        <br> <strong>Array: {{ coordObj.latitude }} </strong>
   		</div>
       <div id = "app">
       <GmapMap
@@ -59,17 +59,20 @@ export default {
     return {
       position: 'determining...',
       coordObj: {
-        longitude: '',
-        latitude: ''
+        longitude: '55',
+        latitude: '66'
       }
     }
 	},
 	methods: {
-    ...mapActions('coordinates', ['addCoord']),
+    ...mapActions('location-store', ['addCoord']),
     getCurrentPosition() {
       Geolocation.getCurrentPosition().then(position => {
         console.log('Current', position);
         this.position = position
+        coordObj.latitude = this.position.coords.latitude
+        coordObj.longitude = this.position.coords.longitude
+        this.addCoord(this.coordObj)
       })
     }
   },
@@ -81,11 +84,10 @@ export default {
     this.geoId = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
       console.log('New GPS position')
       this.position = position
-      coordObj.latitude = this.position.coords.latitude
-      coordObj.longitude = this.position.coords.longitude
-      this.addCoord(this.coordObj)
-      // this.array.push(position.coords.longitude, position.coords.latitude)
-      // console.log(this.array)
+      console.log(this.position.coords.latitude)
+      // coordObj.latitude = this.position.coords.latitude
+      // coordObj.longitude = this.position.coords.longitude
+      // this.addCoord(this.coordObj)
     })
   },
   // beforeDestroy () {

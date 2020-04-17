@@ -5,7 +5,13 @@
     		GPS position of {{ userDetails.name }}  :
 				<br> <strong>Latitude: {{ position.coords.latitude }}</strong>
 				<br> <strong>Longitude: {{ position.coords.longitude }}</strong>
-        <br> <strong>Array: {{ coordObj.latitude }} </strong>
+        <br> <strong>Array: {{ coordObj }} </strong>
+        <q-btn 
+          v-on:click = "addCoords"
+          unelevated 
+          rounded color="primary" 
+          type="submit"
+          label="Add Coordinate" />
   		</div>
       <div id = "app">
       <GmapMap
@@ -35,6 +41,7 @@ import { mapActions } from 'vuex'
 import { Plugins } from '@capacitor/core'
 const { Geolocation } = Plugins
 import * as VueGoogleMaps from 'vue2-google-maps'
+import {coordinatesRef } from 'boot/firebase'
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -59,8 +66,8 @@ export default {
     return {
       position: 'determining...',
       coordObj: {
-        longitude: '55',
-        latitude: '66'
+        longitude: '',
+        latitude: ''
       }
     }
 	},
@@ -70,10 +77,16 @@ export default {
       Geolocation.getCurrentPosition().then(position => {
         console.log('Current', position);
         this.position = position
-        coordObj.latitude = this.position.coords.latitude
-        coordObj.longitude = this.position.coords.longitude
-        this.addCoord(this.coordObj)
+        this.coordObj.latitude = position.coords.latitude
+        this.coordObj.longitude = position.coords.longitude
       })
+    },
+    addCoords() {
+      coordinatesRef.push(this.coordObj)
+      alert("added to database!")
+    },
+    test_alert() {
+      alert ('hello!')
     }
   },
 

@@ -5,7 +5,7 @@
     		GPS position of {{ userDetails.name }}  :
 				<br> <strong>Latitude: {{ position.coords.latitude }}</strong>
 				<br> <strong>Longitude: {{ position.coords.longitude }}</strong>
-        <br> <strong>Array: {{ coordObj }} </strong>
+        <br> <strong> {{ coordObj }} </strong>
         <q-btn 
           v-on:click = "addCoords"
           unelevated 
@@ -41,7 +41,7 @@ import { mapActions } from 'vuex'
 import { Plugins } from '@capacitor/core'
 const { Geolocation } = Plugins
 import * as VueGoogleMaps from 'vue2-google-maps'
-import {coordinatesRef } from 'boot/firebase'
+import { coordinatesRef, firebaseAuth } from 'boot/firebase'
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -57,7 +57,6 @@ Vue.use(VueGoogleMaps, {
 
 })
 
-
 export default {
 	computed: {
 		...mapState('store', ['userDetails'])
@@ -66,19 +65,21 @@ export default {
     return {
       position: 'determining...',
       coordObj: {
+        userId: '',
         longitude: '',
         latitude: ''
       }
     }
 	},
 	methods: {
-    ...mapActions('location-store', ['addCoord']),
+    ...mapActions('locationStore', ['addCoord']),
     getCurrentPosition() {
       Geolocation.getCurrentPosition().then(position => {
         console.log('Current', position);
         this.position = position
         this.coordObj.latitude = position.coords.latitude
         this.coordObj.longitude = position.coords.longitude
+        
       })
     },
     addCoords() {
@@ -97,10 +98,8 @@ export default {
     this.geoId = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
       console.log('New GPS position')
       this.position = position
-      console.log(this.position.coords.latitude)
-      // coordObj.latitude = this.position.coords.latitude
-      // coordObj.longitude = this.position.coords.longitude
-      // this.addCoord(this.coordObj)
+      coordinatesRef.push(this.coordObj)
+      this.coordObj.userId = firebaseAuth.currentUser.uid 
     })
   },
   // beforeDestroy () {

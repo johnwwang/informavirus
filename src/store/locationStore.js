@@ -4,7 +4,7 @@ import state from 'store/store'
 
 // const state = {
 //   coordinates: {
-//     longitude: '',
+//     longitude: '', 
 //     latitude: ''
 //   },
 

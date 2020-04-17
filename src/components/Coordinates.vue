@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex">
   	<template>
-			<div>
+			<div> 
     		GPS position of {{ userDetails.name }}  :
 				<br> <strong>Latitude: {{ position.coords.latitude }}</strong>
 				<br> <strong>Longitude: {{ position.coords.longitude }}</strong>

@@ -4,7 +4,7 @@
     <template>
       <div>
         <GmapMap
-            :center="{lat: {{center.lat}}, lng: {{center.lng}}}"
+            :center="{lat: center.lat, lng: center.lng}"
             :zoom="6"
             map-type-id="terrain"
             style="width: 500px; height: 300px"

@@ -47,6 +47,7 @@ Vue.use(VueGoogleMaps, {
 export default {
 data () {
   return {
+    position: 'determining...',
     center : {
       lat : 30,
       lng : -87
@@ -59,6 +60,10 @@ methods: {
       console.log('Current', position);
       this.position = position
     })
+    this.center = {
+        lat : position.coords.latitude,
+        lng : position.coords.longitude
+      }
   },
 	mounted () {
     this.getCurrentPosition()

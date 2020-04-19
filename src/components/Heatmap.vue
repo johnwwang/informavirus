@@ -64,6 +64,7 @@ methods: {
         lat : position.coords.latitude,
         lng : position.coords.longitude
       }
+    console.log(this.center)
   },
 	mounted () {
     this.getCurrentPosition()
@@ -76,6 +77,7 @@ methods: {
         lat : position.coords.latitude,
         lng : position.coords.longitude
       }
+      console.log(this.center)
     })
   },
   // beforeDestroy () {

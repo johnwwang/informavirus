@@ -1,15 +1,22 @@
 <template>
-  <coordinates />
+  <q-page>
+    <!-- <template> -->
+      <coordinates />
+    <!-- </template> -->
+    <!-- <template> -->
+      <heatmap />
+    <!-- </template> -->
+  </q-page>
 </template>
 
 <script>
-export default {
 
-  
+
+export default {
 	components: {
-    'coordinates' : require('components/Coordinates.vue').default
+    'coordinates' : require('components/Coordinates.vue').default,
+    'heatmap' : require('components/Heatmap.vue').default
   }
-  
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex">
+  <q-card>
   	<template>
 			<div> 
     		GPS position of {{ userDetails.name }}  :
@@ -13,25 +13,8 @@
           type="submit"
           label="Add Coordinate" />
   		</div>
-      <div id = "app">
-      <GmapMap
-          :center="{lat: position.coords.latitude , lng: position.coords.longitude}"
-          :zoom="7"
-          map-type-id="terrain"
-          style="width: 500px; height: 300px"
-        >
-          <GmapMarker
-            :key="index"
-            v-for="(m, index) in markers"
-            :position="m.position"
-            :clickable="true"
-            :draggable="true"
-            @click="center=m.position"
-          />
-      </GmapMap>
-    </div>
   	</template>
-	</q-page>
+	</q-card>
 </template>
 
 <script>
@@ -42,20 +25,6 @@ import { Plugins } from '@capacitor/core'
 const { Geolocation } = Plugins
 import * as VueGoogleMaps from 'vue2-google-maps'
 import { coordinatesRef, firebaseAuth } from 'boot/firebase'
-
-Vue.use(VueGoogleMaps, {
-  load: {
-    key: 'AIzaSyA_BBkhxnsIH84FcFxxdrLUkyhHP1rjpws',
-    libraries: 'places', // This is required if you use the Autocomplete plugin
-    // OR: libraries: 'places,drawing'
-    // OR: libraries: 'places,drawing,visualization'
-    // (as you require)
-
-    //// If you want to set the version, you can do so:
-    // v: '3.26',
-  },
-
-})
 
 export default {
 	computed: {
@@ -76,10 +45,7 @@ export default {
     getCurrentPosition() {
       Geolocation.getCurrentPosition().then(position => {
         console.log('Current', position);
-        this.position = position
-        this.coordObj.latitude = position.coords.latitude
-        this.coordObj.longitude = position.coords.longitude
-        
+        this.position = position  
       })
     },
     addCoords() {
@@ -98,7 +64,9 @@ export default {
     this.geoId = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
       console.log('New GPS position')
       this.position = position
-      coordinatesRef.push(this.coordObj)
+      // coordinatesRef.push(this.coordObj)
+      this.coordObj.latitude = position.coords.latitude
+      this.coordObj.longitude = position.coords.longitude
       this.coordObj.userId = firebaseAuth.currentUser.uid 
     })
   },

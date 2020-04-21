@@ -45,6 +45,15 @@ export default {
       heatData : []
     }
   },
+  methods: {
+    addHeatData () {
+      heatData.push(current)
+    }
+  },
+  mounted () {
+    this.addHeatData()
+    console.log('heatData', heatData)
+  }
 
 }
 </script>

@@ -3,13 +3,13 @@ import { firebaseAuth, firebaseDb } from 'boot/firebase'
 import state from 'store/store'
 
 const state = {
-  coordinates: {},
+  // coordDetails: {},
 }
 
 const mutations = {
-  setCoord(state, payload) {
-    state.coordinates = payload
-  } 
+  // setCoordDetails(state, payload) {
+  //   state.coordinates = payload
+  // } 
 },
 
 const actions = {
@@ -19,13 +19,19 @@ const actions = {
     longitude: payload.longitude,
     latitude: payload.latitude
     })
-    commit('addCoord', payload)
   },
+//   changeCoord ({ commit }) {
+//   console.log('coordDetails', coordinates)
+//   commit('setCoordDetails', {
+//     latitude = coordinates.latitude,
+//     longitude = coordinates.longitude
+//   })
+// }
 },
 
-// getters = {
+getters = {
 
-// } 
+}
 export default {
   namespaced: true,
   state,

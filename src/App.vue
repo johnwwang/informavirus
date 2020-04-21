@@ -9,12 +9,12 @@ import { mapActions } from 'vuex'
 export default {
   methods: {
     ...mapActions ('store', ['handleAuthStateChanged']),
-    ...mapActions ('locationStore', ['addCoord'])
+    // ...mapActions ('locationStore', ['changeCoord'])
   },
   // WTF IS A VUE.JS LIFECYCLE HOOK
   mounted () {
     this.handleAuthStateChanged ()
-    this.addCoord ()
+    // this.changeCoord ()
   }
 }
 </script>

@@ -41,7 +41,7 @@ export default {
     }
 	},
 	methods: {
-    ...mapActions('locationStore', ['addCoord']),
+    // ...mapActions('locationStore', ['changeCoord']),
     getCurrentPosition() {
       Geolocation.getCurrentPosition().then(position => {
         console.log('Current', position);
@@ -51,7 +51,7 @@ export default {
     addCoords() {
       coordinatesRef.push(this.coordObj)
       alert("added to database!")
-      this.addCoord(this.coordObj)
+      // this.changeCoord(this.coordObj)
     },
     
   },

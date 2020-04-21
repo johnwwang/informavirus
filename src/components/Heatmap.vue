@@ -49,7 +49,7 @@ data () {
   return {
     position: 'determining...',
     center : {
-      lat : 30,
+      lat : 41,
       lng : -87
     }
   }

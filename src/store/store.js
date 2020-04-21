@@ -9,7 +9,7 @@ const mutations = {
   setUserDetails(state, payload) {
     state.userDetails = payload
   }
-}
+} 
 
 const actions = {
   registerUser({}, payload) {

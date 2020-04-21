@@ -13,7 +13,7 @@
           type="submit"
           label="Add Coordinate" />
   		</div>
-  	</template>
+  	</template> 
 	</q-card>
 </template>
 

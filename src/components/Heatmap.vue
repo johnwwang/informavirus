@@ -4,12 +4,13 @@
     <template>
       <div>
         <GmapMap
-            :center="current"
+            :center="center"
             :zoom="14"
             map-type-id="terrain"
             style="width: 500px; height: 300px"
           >
         </GmapMap>
+        <!-- <q-btn color="red" v-on:click = "addHeatData" /> -->
       </div>
     </template>
   </q-page>
@@ -24,6 +25,7 @@ import { Plugins } from '@capacitor/core'
 const { Geolocation } = Plugins
 import * as VueGoogleMaps from 'vue2-google-maps'
 import { coordinatesRef, firebaseAuth } from 'boot/firebase'
+// import { coordObj } from 'components/Coordinates.vue'
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -35,25 +37,43 @@ Vue.use(VueGoogleMaps, {
   },
 })
 
+
 export default {
   data () {
     return {
-      current : {
+      position: 'determining...',
+      center : {
         lat : 41.9051549, 
         lng : -87.6285003
       },
-      heatData : []
+      currentCoord : {
+        latitude : '',
+        longitude : ''
+      }
     }
   },
   methods: {
-    addHeatData () {
-      heatData.push(current)
-    }
-  },
-  mounted () {
-    this.addHeatData()
-    console.log('heatData', heatData)
-  }
+    // ...mapActions('locationStore', ['changeCoord']),
+    getCurrentPosition() {
+      Geolocation.getCurrentPosition().then(position => {
+        console.log('Current', position);
+        this.position = position  
+      })
+    },
 
+  },
+
+	mounted () {
+    this.getCurrentPosition()
+
+    // we start listening
+    this.geoId = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
+      console.log('New GPS position')
+      this.position = position
+      this.currentCoord.latitude = position.coords.latitude
+      this.currentCoord.longitude = position.coords.longitude
+      console.log(currentCoord)
+    })
+  },
 }
 </script>

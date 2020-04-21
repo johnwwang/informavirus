@@ -2,18 +2,15 @@ import { coordinatesRef } from 'boot/firebase'
 import { firebaseAuth, firebaseDb } from 'boot/firebase'
 import state from 'store/store'
 
-// const state = {
-//   coordinates: {
-//     longitude: '', 
-//     latitude: ''
-//   },
+const state = {
+  coordinates: {},
+}
 
-
-// const mutations = {
-//   setCoord(state, payload) {
-//     state.userDetails = payload
-//   }
-// },
+const mutations = {
+  setCoord(state, payload) {
+    state.coordinates = payload
+  } 
+},
 
 const actions = {
   addCoord ({}, payload){
@@ -22,7 +19,7 @@ const actions = {
     longitude: payload.longitude,
     latitude: payload.latitude
     })
-    // commit('addCoord', payload)
+    commit('addCoord', payload)
   },
 },
 
@@ -31,8 +28,8 @@ const actions = {
 // } 
 export default {
   namespaced: true,
-  // state,
-  // mutations,
+  state,
+  mutations,
   actions,
-  // getters
+  getters
 }

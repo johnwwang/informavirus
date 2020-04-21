@@ -8,7 +8,7 @@
         <br> <strong> {{ coordObj }} </strong>
         <q-btn 
           v-on:click = "addCoords"
-          unelevated 
+          elevated 
           rounded color="primary" 
           type="submit"
           label="Add Coordinate" />
@@ -51,10 +51,9 @@ export default {
     addCoords() {
       coordinatesRef.push(this.coordObj)
       alert("added to database!")
+      this.addCoord(this.coordObj)
     },
-    test_alert() {
-      alert ('hello!')
-    }
+    
   },
 
 	mounted () {
@@ -68,6 +67,7 @@ export default {
       this.coordObj.latitude = position.coords.latitude
       this.coordObj.longitude = position.coords.longitude
       this.coordObj.userId = firebaseAuth.currentUser.uid 
+      
     })
   },
   // beforeDestroy () {

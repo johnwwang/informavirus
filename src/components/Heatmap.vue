@@ -1,22 +1,14 @@
 
 <template>
-  <q-page>
+  <q-page padding>
     <template>
       <div>
         <GmapMap
-            :center="center"
-            :zoom="6"
+            :center="current"
+            :zoom="14"
             map-type-id="terrain"
             style="width: 500px; height: 300px"
           >
-            <GmapMarker
-              :key="index"
-              v-for="(m, index) in markers"
-              :position="m.position"
-              :clickable="true"
-              :draggable="true"
-              @click="center=m.position"
-            />
         </GmapMap>
       </div>
     </template>
@@ -33,7 +25,6 @@ const { Geolocation } = Plugins
 import * as VueGoogleMaps from 'vue2-google-maps'
 import { coordinatesRef, firebaseAuth } from 'boot/firebase'
 
-
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyCqbDsJ5lt1gxseVKXyPCbayQGqSyROtWQ',
@@ -45,45 +36,15 @@ Vue.use(VueGoogleMaps, {
 })
 
 export default {
-data () {
-  return {
-    position: 'determining...',
-    center : {
-      lat : 30,
-      lng : -87
+  data () {
+    return {
+      current : {
+        lat : 41.9051549, 
+        lng : -87.6285003
+      },
+      heatData : []
     }
-  }
-},
-methods: {
-  getCurrentPosition() {
-    Geolocation.getCurrentPosition().then(position => {
-      console.log('Current', position);
-      this.position = position
-    })
-    this.center = {
-        lat : position.coords.latitude,
-        lng : position.coords.longitude
-      }
-    console.log(this.center)
   },
-	mounted () {
-    this.getCurrentPosition()
 
-    // we start listening
-    this.geoId = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
-      console.log('New GPS position')
-      this.position = position
-      this.center = {
-        lat : position.coords.latitude,
-        lng : position.coords.longitude
-      }
-      console.log(this.center)
-    })
-  },
-  // beforeDestroy () {
-  //   // we do cleanup
-  //   Geolocation.clearWatch(this.geoId)
-  // }
-}
 }
 </script>

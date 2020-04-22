@@ -10,9 +10,11 @@
             style="width: 500px; height: 300px"
           >
         </GmapMap>
-        <!-- <q-btn color="red" v-on:click = "addHeatData" /> -->
       </div>
     </template>
+    <div>
+      <h2> {{ center }} </h2>
+    </div>
   </q-page>
 </template>
 
@@ -43,13 +45,9 @@ export default {
     return {
       position: 'determining...',
       center : {
-        lat : 41.9051549, 
-        lng : -87.6285003
+        lat : 41, 
+        lng : -8
       },
-      currentCoord : {
-        latitude : '',
-        longitude : ''
-      }
     }
   },
   methods: {
@@ -70,10 +68,19 @@ export default {
     this.geoId = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
       console.log('New GPS position')
       this.position = position
-      this.currentCoord.latitude = position.coords.latitude
-      this.currentCoord.longitude = position.coords.longitude
-      console.log(currentCoord)
+      Vue.set(this, 'center', {
+        lat : position.coords.latitude,
+        lng : position.coords.longitude
+      })
+      
+      // this.center.latitude = position.coords.latitude
+      // this.center.longitude = position.coords.longitude
+
     })
   },
+    beforeDestroy () {
+    // we do cleanup
+    Geolocation.clearWatch(this.geoId)
+  }
 }
 </script>

@@ -1,25 +1,20 @@
 
 <template>
-  <q-page>
+  <q-page padding>
     <template>
       <div>
         <GmapMap
-            :center="{lat: center.lat, lng: center.lng}"
-            :zoom="6"
+            :center="center"
+            :zoom="7"
             map-type-id="terrain"
             style="width: 500px; height: 300px"
           >
-            <GmapMarker
-              :key="index"
-              v-for="(m, index) in markers"
-              :position="m.position"
-              :clickable="true"
-              :draggable="true"
-              @click="center=m.position"
-            />
         </GmapMap>
       </div>
     </template>
+    <div>
+      <h2> {{ center }} </h2>
+    </div>
   </q-page>
 </template>
 
@@ -32,7 +27,7 @@ import { Plugins } from '@capacitor/core'
 const { Geolocation } = Plugins
 import * as VueGoogleMaps from 'vue2-google-maps'
 import { coordinatesRef, firebaseAuth } from 'boot/firebase'
-
+// import { coordObj } from 'components/Coordinates.vue'
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -44,27 +39,28 @@ Vue.use(VueGoogleMaps, {
   },
 })
 
+
 export default {
-data () {
-  return {
-    position: 'determining...',
-    center : {
-      lat : 41,
-      lng : -87
+  data () {
+    return {
+      position: 'determining...',
+      center : {
+        lat : 40.3399, 
+        lng : 127.5101
+      },
     }
-  }
-},
-methods: {
-  getCurrentPosition() {
-    Geolocation.getCurrentPosition().then(position => {
-      console.log('Current', position);
-      this.position = position
-    })
-    this.center = {
-        lat : position.coords.latitude,
-        lng : position.coords.longitude
-      }
   },
+  methods: {
+    // ...mapActions('locationStore', ['changeCoord']),
+    getCurrentPosition() {
+      Geolocation.getCurrentPosition().then(position => {
+        console.log('Current', position);
+        this.position = position  
+      })
+    },
+
+  },
+
 	mounted () {
     this.getCurrentPosition()
 
@@ -72,16 +68,19 @@ methods: {
     this.geoId = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
       console.log('New GPS position')
       this.position = position
-      this.center = {
+      Vue.set(this, 'center', {
         lat : position.coords.latitude,
         lng : position.coords.longitude
-      }
+      })
+      
+      // this.center.latitude = position.coords.latitude
+      // this.center.longitude = position.coords.longitude
+
     })
   },
-  // beforeDestroy () {
-  //   // we do cleanup
-  //   Geolocation.clearWatch(this.geoId)
-  // }
-}
+    beforeDestroy () {
+    // we do cleanup
+    Geolocation.clearWatch(this.geoId)
+  }
 }
 </script>

@@ -5,7 +5,7 @@
       <div>
         <GmapMap
             :center="center"
-            :zoom="14"
+            :zoom="7"
             map-type-id="terrain"
             style="width: 500px; height: 300px"
           >
@@ -45,8 +45,8 @@ export default {
     return {
       position: 'determining...',
       center : {
-        lat : 41, 
-        lng : -8
+        lat : 40.3399, 
+        lng : 127.5101
       },
     }
   },

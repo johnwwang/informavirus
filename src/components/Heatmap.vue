@@ -13,7 +13,13 @@
       </div>
     </template>
     <div>
-      <h2> {{ center }} </h2>
+      <!-- <h2> {{ center }} </h2> -->
+      <p>
+        <ol id="coordlist">
+          
+        </ol>
+      <p/>
+      
     </div>
   </q-page>
 </template>
@@ -26,7 +32,7 @@ import { mapActions } from 'vuex'
 import { Plugins } from '@capacitor/core'
 const { Geolocation } = Plugins
 import * as VueGoogleMaps from 'vue2-google-maps'
-import { coordinatesRef, firebaseAuth } from 'boot/firebase'
+import { coordinatesRef, firebaseAuth, gotData } from 'boot/firebase'
 // import { coordObj } from 'components/Coordinates.vue'
 
 Vue.use(VueGoogleMaps, {
@@ -54,7 +60,6 @@ export default {
     // ...mapActions('locationStore', ['changeCoord']),
     getCurrentPosition() {
       Geolocation.getCurrentPosition().then(position => {
-        console.log('Current', position);
         this.position = position  
       })
     },
@@ -72,9 +77,8 @@ export default {
         lat : position.coords.latitude,
         lng : position.coords.longitude
       })
-      
-      // this.center.latitude = position.coords.latitude
-      // this.center.longitude = position.coords.longitude
+
+
 
     })
   },

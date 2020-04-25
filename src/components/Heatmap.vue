@@ -9,6 +9,11 @@
             map-type-id="terrain"
             style="width: 500px; height: 300px"
           >
+          <!-- <gmap-marker
+          :key="index"
+          v-for="(i, index) in markers"
+          :position="i"
+          ></gmap-marker> -->
         </GmapMap>
       </div>
     </template>
@@ -18,6 +23,9 @@
   </q-page>
 </template>
 
+<script type="text/javascript"
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqbDsJ5lt1gxseVKXyPCbayQGqSyROtWQ&libraries=visualization">
+</script>
 
 <script>
 import Vue from 'vue'
@@ -54,7 +62,7 @@ function gotData(data) {
     var k = keys[i]
     var latitude = coordinates[k].latitude
     var longitude = coordinates[k].longitude
-    array.push(k)
+    array.push({latitude, longitude})
   }
 
   console.log(array)
@@ -73,9 +81,17 @@ export default {
         lat : 40.3399, 
         lng : 127.5101
       },
-
+      markers : [{
+        latitude: 42.11967010000001,
+      longitude: -88.03082619999999
+      }]
     }
   },
+  methods: {
+
+  }, 
+
+  // EVERYTHING BELOW THIS IS TO GET CURRENT POSITION
   methods: {
     getCurrentPosition() {
       Geolocation.getCurrentPosition().then(position => {
@@ -84,24 +100,18 @@ export default {
     },
 
   },
-  insert() {
-
-  },
 
 	mounted () {
     this.getCurrentPosition()
 
     // we start listening
     this.geoId = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
-      console.log('New GPS position')
+      console.log('New GPS position -- heatmap')
       this.position = position
       Vue.set(this, 'center', {
         lat : position.coords.latitude,
         lng : position.coords.longitude
       })
-
-
-
     })
   },
     beforeDestroy () {

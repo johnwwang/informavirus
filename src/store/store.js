@@ -46,7 +46,7 @@ const actions = {
         let userId = firebaseAuth.currentUser.uid
         firebaseDb.ref('users/' + userId).once('value', snapshot => {
           console.log('snapshot', snapshot)
-          this.$router.push('/')
+          
           //WHAT IS A SNAPSHOT -- VIDEO 8 goes over all of this
           let userDetails = snapshot.val()
           console.log('userDetails:', userDetails)
@@ -55,13 +55,16 @@ const actions = {
             email: userDetails.email,
             userId: userId
           })
-        }
-        )
+        })
+        // IF SOMETHING IS WRONG WITH HANDLAUTHSTATECHANGED, MOVE this.$routerpush('/')
+        // BELOW console.log('snapshot', snapshot)
+        this.$router.push('/')
       }
       else {
         //user is logged out
         commit('setUserDetails', {})
         this.$router.replace('/auth')
+        
       }
     })
   }

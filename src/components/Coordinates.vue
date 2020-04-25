@@ -60,7 +60,7 @@ export default {
 
     // we start listening
     this.geoId = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
-      console.log('New GPS position')
+      console.log('New GPS position -- coordinates')
       this.position = position
       
       // TURN ON TO ADD TO DATABASE

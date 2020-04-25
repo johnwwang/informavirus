@@ -10,16 +10,19 @@
             style="width: 500px; height: 300px"
           >
         </GmapMap>
+        <!-- <gmap-marker
+        :key="index"
+        v-for="(m, index) in markers"
+        :position="center"
+        @click="center=m.position"
+      ></gmap-marker>  -->
       </div>
     </template>
     <div>
       <!-- <h2> {{ center }} </h2> -->
-      <p>
-        <ol id="coordlist">
-          
-        </ol>
-      <p/>
+      <ol>
       
+      </ol>
     </div>
   </q-page>
 </template>
@@ -29,11 +32,10 @@
 import Vue from 'vue'
 import { mapState } from 'vuex'
 import { mapActions } from 'vuex'
-import { Plugins } from '@capacitor/core'
+import { Plugins, KeyboardStyle } from '@capacitor/core'
 const { Geolocation } = Plugins
 import * as VueGoogleMaps from 'vue2-google-maps'
-import { coordinatesRef, firebaseAuth, gotData } from 'boot/firebase'
-// import { coordObj } from 'components/Coordinates.vue'
+import { coordinatesRef, firebaseAuth } from 'boot/firebase'
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -46,6 +48,31 @@ Vue.use(VueGoogleMaps, {
 })
 
 
+// logs all coordinates in the database
+coordinatesRef.on('value', gotData, errData);
+
+let array = []
+function gotData(data) {
+  console.log(data.val())
+  var coordinates = data.val();
+  var keys = Object.keys(coordinates);
+  console.log('KEYS' + keys);
+  
+  
+  for (var i = 0; i < keys.length; i++) {
+    var k = keys[i]
+    var latitude = coordinates[k].latitude
+    var longitude = coordinates[k].longitude
+    array.push(k)
+  }
+  console.log(array)
+}
+
+function errData(err) {
+  console.log("Error")
+  console.log(err)
+}
+
 export default {
   data () {
     return {
@@ -54,6 +81,10 @@ export default {
         lat : 40.3399, 
         lng : 127.5101
       },
+      // coordarray : [{
+      //   latitude : '',
+      //   longitude : ''
+      // }]
     }
   },
   methods: {
@@ -63,6 +94,9 @@ export default {
         this.position = position  
       })
     },
+
+  },
+  insert() {
 
   },
 

@@ -62,6 +62,7 @@ export default {
     this.geoId = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
       console.log('New GPS position')
       this.position = position
+      
       // TURN ON TO ADD TO DATABASE
       // coordinatesRef.push(this.coordObj)
       this.coordObj.latitude = position.coords.latitude

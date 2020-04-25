@@ -23,9 +23,6 @@
   </q-page>
 </template>
 
-<script type="text/javascript"
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqbDsJ5lt1gxseVKXyPCbayQGqSyROtWQ&libraries=visualization">
-</script>
 
 <script>
 import Vue from 'vue'

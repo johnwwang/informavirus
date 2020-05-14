@@ -10,19 +10,10 @@
             style="width: 500px; height: 300px"
           >
         </GmapMap>
-        <!-- <gmap-marker
-        :key="index"
-        v-for="(m, index) in markers"
-        :position="center"
-        @click="center=m.position"
-      ></gmap-marker>  -->
       </div>
     </template>
     <div>
       <!-- <h2> {{ center }} </h2> -->
-      <ol>
-      
-      </ol>
     </div>
   </q-page>
 </template>
@@ -58,13 +49,14 @@ function gotData(data) {
   var keys = Object.keys(coordinates);
   console.log('KEYS' + keys);
   
-  
+
   for (var i = 0; i < keys.length; i++) {
     var k = keys[i]
     var latitude = coordinates[k].latitude
     var longitude = coordinates[k].longitude
     array.push(k)
   }
+
   console.log(array)
 }
 
@@ -81,14 +73,10 @@ export default {
         lat : 40.3399, 
         lng : 127.5101
       },
-      // coordarray : [{
-      //   latitude : '',
-      //   longitude : ''
-      // }]
+
     }
   },
   methods: {
-    // ...mapActions('locationStore', ['changeCoord']),
     getCurrentPosition() {
       Geolocation.getCurrentPosition().then(position => {
         this.position = position  

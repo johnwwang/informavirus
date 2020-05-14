@@ -65,6 +65,7 @@ export default {
     addToArray() {
       coordinatesRef.on('value', gotdata, errData);
       var array = []
+      var that = this;
       function gotdata (data) {
         console.log(data.val())
         var coordinates = data.val();
@@ -76,8 +77,12 @@ export default {
           var longitude = coordinates[k].longitude
           array.push({latitude, longitude})
         }
-        console.log(array)
+
+        that.arrayObj = array;
+        console.log("thatarray");
+        console.log(that.arrayObj)
       }
+      
       function errData(err) {
         console.log("Error")
         console.log(err)
@@ -97,8 +102,6 @@ export default {
       })
     })
     this.addToArray()
-    console.log("arrayObj" + this.arrayObj)
-
   },
     beforeDestroy () {
     // we do cleanup

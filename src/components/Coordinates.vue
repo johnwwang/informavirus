@@ -1,79 +1,92 @@
 <template>
   <q-card>
-  	<template>
-			<div> 
-    		GPS position of {{ userDetails.name }}  :
-				<br> <strong>Latitude: {{ position.coords.latitude }}</strong>
-				<br> <strong>Longitude: {{ position.coords.longitude }}</strong>
-        <br> <strong> {{ coordObj }} </strong>
-        <q-btn 
-          v-on:click = "addCoords"
-          elevated  
-          rounded color="primary" 
+    <template>
+      <div>
+        GPS position of {{ userDetails.name }} :
+        <br />
+        <strong>Latitude: {{ position.coords.latitude }}</strong>
+        <br />
+        <strong>Longitude: {{ position.coords.longitude }}</strong>
+        <br />
+        <strong>{{ coordObj }}</strong>
+        <q-btn
+          v-on:click="addCoords"
+          elevated
+          rounded
+          color="primary"
           type="submit"
-          label="Add Coordinate" />
-  		</div>
-  	</template> 
-	</q-card>
+          label="Add Coordinate"
+        />
+      </div>
+    </template>
+  </q-card>
 </template>
 
 <script>
-import Vue from 'vue'
-import { mapState } from 'vuex'
-import { mapActions } from 'vuex'
-import { Plugins } from '@capacitor/core'
-const { Geolocation } = Plugins
-import * as VueGoogleMaps from 'vue2-google-maps'
-import { coordinatesRef, firebaseAuth } from 'boot/firebase'
+import Vue from "vue";
+import { mapState } from "vuex";
+import { mapActions } from "vuex";
+import { Plugins } from "@capacitor/core";
+const { Geolocation } = Plugins;
+import * as VueGoogleMaps from "vue2-google-maps";
+import { coordinatesRef, firebaseAuth } from "boot/firebase";
 
 export default {
-	computed: {
-		...mapState('store', ['userDetails'])
-	},
-	data () {
+  computed: {
+    ...mapState("store", ["userDetails"])
+  },
+  data() {
     return {
-      position: 'determining...',
+      position: "determining...",
       coordObj: {
-        userId: '',
-        longitude: '',
-        latitude: ''
+        userId: "",
+        latitude: "",
+        longitude: ""
       }
-    }
-	},
-	methods: {
+    };
+  },
+  methods: {
     // ...mapActions('locationStore', ['changeCoord']),
     getCurrentPosition() {
       Geolocation.getCurrentPosition().then(position => {
-        console.log('Current', position);
-        this.position = position  
-      })
+        console.log("Current", position);
+        this.position = position;
+      });
     },
     addCoords() {
-      coordinatesRef.push(this.coordObj)
-      alert("added to database!")
-    },
+      coordinatesRef.push(this.coordObj);
+      alert("added to database!");
+    }
   },
 
-	mounted () {
-    this.getCurrentPosition()
+  mounted() {
+    this.getCurrentPosition();
 
     // we start listening
-    this.geoId = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
-      console.log('New GPS position')
-      this.position = position
-      
-      // TURN ON TO ADD TO DATABASE
-      // coordinatesRef.push(this.coordObj)
-      this.coordObj.latitude = position.coords.latitude
-      this.coordObj.longitude = position.coords.longitude
-      this.coordObj.userId = firebaseAuth.currentUser.uid 
-    })
+    this.geoId = Geolocation.watchPosition(
+      { enableHighAccuracy: true },
+      (position, err) => {
+        console.log("New GPS position");
+        this.position = position;
+
+        // TURN ON TO ADD TO DATABASE
+        // coordinatesRef.push(
+        //   new google.maps.LatLng(
+        //     this.coordObj.latitude,
+        //     this.coordObj.longitude
+        //   )
+        // );
+        this.coordObj.latitude = position.coords.latitude;
+        this.coordObj.longitude = position.coords.longitude;
+        this.coordObj.userId = firebaseAuth.currentUser.uid;
+      }
+    );
   },
-  beforeDestroy () {
+  beforeDestroy() {
     // we do cleanup
-    Geolocation.clearWatch(this.geoId)
+    Geolocation.clearWatch(this.geoId);
   }
-}
+};
 </script>
 
 <style>

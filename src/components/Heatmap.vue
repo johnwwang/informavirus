@@ -38,33 +38,6 @@ Vue.use(VueGoogleMaps, {
   },
 })
 
- 
-// logs all coordinates in the database
-coordinatesRef.on('value', gotData, errData);
-
-let array = []
-function gotData(data) {
-  console.log(data.val())
-  var coordinates = data.val();
-  var keys = Object.keys(coordinates);
-  console.log('KEYS' + keys);
-  
-
-  for (var i = 0; i < keys.length; i++) {
-    var k = keys[i]
-    var latitude = coordinates[k].latitude
-    var longitude = coordinates[k].longitude
-    array.push(k)
-  }
-
-  console.log(array)
-}
-
-function errData(err) {
-  console.log("Error")
-  console.log(err)
-}
-
 export default {
   data () {
     return {
@@ -73,9 +46,15 @@ export default {
         lat : 40.3399, 
         lng : 127.5101
       },
-
+      arrayObj : [
+        {
+          latitude: 0,
+          longitude: 0
+        }
+      ]
     }
   },
+
   methods: {
     getCurrentPosition() {
       Geolocation.getCurrentPosition().then(position => {
@@ -83,11 +62,28 @@ export default {
       })
     },
 
-  },
-  insert() {
-
-  },
-
+    addToArray() {
+      coordinatesRef.on('value', gotdata, errData);
+      var array = []
+      function gotdata (data) {
+        console.log(data.val())
+        var coordinates = data.val();
+        var keys = Object.keys(coordinates);
+        console.log('KEYS' + keys);
+        for (var i = 0; i < keys.length; i++) {
+          var k = keys[i]
+          var latitude = coordinates[k].latitude
+          var longitude = coordinates[k].longitude
+          array.push({latitude, longitude})
+        }
+        console.log(array)
+      }
+      function errData(err) {
+        console.log("Error")
+        console.log(err)
+      }
+    },
+},
 	mounted () {
     this.getCurrentPosition()
 
@@ -99,10 +95,10 @@ export default {
         lat : position.coords.latitude,
         lng : position.coords.longitude
       })
-
-
-
     })
+    this.addToArray()
+    console.log("arrayObj" + this.arrayObj)
+
   },
     beforeDestroy () {
     // we do cleanup

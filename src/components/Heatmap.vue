@@ -77,9 +77,7 @@ export default {
           var longitude = coordinates[k].longitude
           array.push({latitude, longitude})
         }
-
         that.arrayObj = array;
-        console.log("thatarray");
         console.log(that.arrayObj)
       }
       

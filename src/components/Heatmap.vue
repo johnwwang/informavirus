@@ -47,7 +47,7 @@ Vue.use(VueGoogleMaps, {
   },
 })
 
-
+ 
 // logs all coordinates in the database
 coordinatesRef.on('value', gotData, errData);
 

@@ -2,28 +2,29 @@
 <template>
   <q-page padding>
     <template>
-      <div>
-        <GmapMap
+      <div
+        :v-if="this.arrayObj">
+        
+        <!-- <GmapMap
+          id="map"
           :center="center"
           :zoom="7"
           map-type-id="terrain"
           style="width: 500px; height: 300px"
-        ></GmapMap>
-        <gmap-marker
-        :key="index"
-        v-for="(m, index) in arrayObj"
-        :position="m.position"
-        @click="center=m.position"
-        ref="marker"
-        ></gmap-marker>
-        <!-- <vue-google-heatmap :points="arrayObj"
-                      :width="400"
-                      :height="350"
-                      :center="center" /> -->
+        ></GmapMap> -->
+        <vue-google-heatmap 
+          v-if="this.arrayObj.length > 0"
+          :points="arrayObj"
+          :lat="center.lat"
+          :lng="center.lng"
+          :initial-zoom=7
+          :width="400"
+          :height="350"/>
       </div>
     </template>
+    <q-btn @click="arrobj"> get coords </q-btn>
     <div>
-      <q-btn @click="printMarkers"> Print Markers </q-btn>
+      <p> {{ this.arrayObj }} </p>
     </div>
   </q-page>
 </template>
@@ -37,57 +38,65 @@ import { Plugins, KeyboardStyle } from "@capacitor/core";
 const { Geolocation } = Plugins;
 import * as VueGoogleMaps from "vue2-google-maps";
 import { coordinatesRef, firebaseAuth } from "boot/firebase";
-// import VueGoogleHeatmap from 'vue-google-heatmap';
+import VueGoogleHeatmap from 'vue-google-heatmap';
 
-Vue.use(VueGoogleMaps, {
-  load: {
-    key: "AIzaSyCqbDsJ5lt1gxseVKXyPCbayQGqSyROtWQ",
-    libraries: "places, visualization"
-  }
-});
 
-// Vue.use(VueGoogleHeatmap, {
-//   apiKey: "AIzaSyCqbDsJ5lt1gxseVKXyPCbayQGqSyROtWQ"
+// Vue.use(VueGoogleMaps, {
+//   load: {
+//     key: "AIzaSyCqbDsJ5lt1gxseVKXyPCbayQGqSyROtWQ",
+//     libraries: "places, visualization"
+//     //// If you want to set the version, you can do so:
+//     // v: '3.26',
+//   }
 // });
+Vue.use(VueGoogleHeatmap, {
+  apiKey: "AIzaSyCqbDsJ5lt1gxseVKXyPCbayQGqSyROtWQ"
+});
 
 export default {
   data() {
     return {
+      isLoaded: false,
       position: "determining...",
       center: {
-        lat: 40.3399,
-        lng: 127.5101
+        lat: 39.6918784,
+        lng: -89.6925696
       },
-      arrayObj: []
+      arrayObj: null,
+      
     };
   },
 
   methods: {
-    printMarkers() {
+    arrobj() {
       console.log(this.arrayObj)
+      console.log(this.arrayObj.length)
     },
     getCurrentPosition() {
       Geolocation.getCurrentPosition().then(position => {
         this.position = position;
       });
     },
+
     addToArray() {
       coordinatesRef.on("value", gotdata, errData);
-      var array = [];
       var that = this;
       function gotdata(data) {
-        console.log(data.val());
+        var array = [];
+        console.log("array")
+        console.log(array)
+        // console.log(data.val());
         var coordinates = data.val();
         var keys = Object.keys(coordinates);
-        console.log("KEYS" + keys);
+        // console.log("KEYS" + keys);
         for (var i = 0; i < keys.length; i++) {
           var k = keys[i];
           var latitude = coordinates[k].latitude;
           var longitude = coordinates[k].longitude;
-          array.push(new google.maps.LatLng(latitude, longitude));
+          array.push({lat: latitude, lng: longitude});
         }
         that.arrayObj = array;
-        console.log("thatarray");
+        console.log("array object");
         console.log(that.arrayObj);
       }
 
@@ -97,20 +106,28 @@ export default {
       }
     }
   },
+  // beforeCreate() {
+  //   this.addToArray();
+  // },
+  created() {
+    this.addToArray();
+  },
   mounted() {
+    
     this.getCurrentPosition();
 
     // we start listening
     this.geoId = Geolocation.watchPosition(
       { enableHighAccuracy: true },
       (position, err) => {
-        console.log("New GPS position");
+        // console.log("New GPS position");
         this.position = position;
         Vue.set(this, "center", {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         });
-      });
+      }
+    );
     this.addToArray();
   },
   beforeDestroy() {

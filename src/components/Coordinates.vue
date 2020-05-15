@@ -63,24 +63,17 @@ export default {
     this.getCurrentPosition();
 
     // we start listening
-    this.geoId = Geolocation.watchPosition(
-      { enableHighAccuracy: true },
-      (position, err) => {
-        console.log("New GPS position");
-        this.position = position;
-
-        // TURN ON TO ADD TO DATABASE
-        // coordinatesRef.push(
-        //   new google.maps.LatLng(
-        //     this.coordObj.latitude,
-        //     this.coordObj.longitude
-        //   )
-        // );
-        this.coordObj.latitude = position.coords.latitude;
-        this.coordObj.longitude = position.coords.longitude;
-        this.coordObj.userId = firebaseAuth.currentUser.uid;
-      }
-    );
+    this.geoId = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
+      console.log('New GPS position -- coordinates')
+      this.position = position
+      
+      // TURN ON TO ADD TO DATABASE
+      // coordinatesRef.push(this.coordObj)
+      this.coordObj.latitude = position.coords.latitude
+      this.coordObj.longitude = position.coords.longitude
+      this.coordObj.userId = firebaseAuth.currentUser.uid 
+      
+    })
   },
   beforeDestroy() {
     // we do cleanup

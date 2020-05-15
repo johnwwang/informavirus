@@ -4,7 +4,7 @@
       <coordinates />
     <!-- </template> -->
     <!-- <template> -->
-      <heatmap />
+      <maps />
     <!-- </template> -->
   </q-page>
 </template>
@@ -15,7 +15,7 @@
 export default {
 	components: {
     'coordinates' : require('components/Coordinates.vue').default,
-    'heatmap' : require('components/Heatmap.vue').default
+    'maps' : require('components/maps.vue').default
   }
 }
 </script>

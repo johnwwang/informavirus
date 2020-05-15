@@ -9,10 +9,21 @@
           map-type-id="terrain"
           style="width: 500px; height: 300px"
         ></GmapMap>
+        <gmap-marker
+        :key="index"
+        v-for="(m, index) in arrayObj"
+        :position="m.position"
+        @click="center=m.position"
+        ref="marker"
+        ></gmap-marker>
+        <!-- <vue-google-heatmap :points="arrayObj"
+                      :width="400"
+                      :height="350"
+                      :center="center" /> -->
       </div>
     </template>
     <div>
-      <!-- <h2> {{ center }} </h2> -->
+      <q-btn @click="printMarkers"> Print Markers </q-btn>
     </div>
   </q-page>
 </template>
@@ -26,15 +37,18 @@ import { Plugins, KeyboardStyle } from "@capacitor/core";
 const { Geolocation } = Plugins;
 import * as VueGoogleMaps from "vue2-google-maps";
 import { coordinatesRef, firebaseAuth } from "boot/firebase";
+// import VueGoogleHeatmap from 'vue-google-heatmap';
 
 Vue.use(VueGoogleMaps, {
   load: {
     key: "AIzaSyCqbDsJ5lt1gxseVKXyPCbayQGqSyROtWQ",
     libraries: "places, visualization"
-    //// If you want to set the version, you can do so:
-    // v: '3.26',
   }
 });
+
+// Vue.use(VueGoogleHeatmap, {
+//   apiKey: "AIzaSyCqbDsJ5lt1gxseVKXyPCbayQGqSyROtWQ"
+// });
 
 export default {
   data() {
@@ -49,12 +63,14 @@ export default {
   },
 
   methods: {
+    printMarkers() {
+      console.log(this.arrayObj)
+    },
     getCurrentPosition() {
       Geolocation.getCurrentPosition().then(position => {
         this.position = position;
       });
     },
-
     addToArray() {
       coordinatesRef.on("value", gotdata, errData);
       var array = [];
@@ -71,12 +87,8 @@ export default {
           array.push(new google.maps.LatLng(latitude, longitude));
         }
         that.arrayObj = array;
-<<<<<<< HEAD
-        console.log(that.arrayObj)
-=======
         console.log("thatarray");
         console.log(that.arrayObj);
->>>>>>> 27d95c7406458d00b678e119742ee52f4c86a355
       }
 
       function errData(err) {
@@ -98,8 +110,7 @@ export default {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         });
-      }
-    );
+      });
     this.addToArray();
   },
   beforeDestroy() {

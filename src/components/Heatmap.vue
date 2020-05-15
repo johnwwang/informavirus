@@ -1,107 +1,89 @@
 
-<template>
-  <q-page padding>
-    <template>
-      <div>
-        <GmapMap
-          :center="center"
-          :zoom="7"
-          map-type-id="terrain"
-          style="width: 500px; height: 300px"
-        ></GmapMap>
-      </div>
-    </template>
-    <div>
-      <!-- <h2> {{ center }} </h2> -->
-    </div>
-  </q-page>
+ <template>
+  <div ref="heatmap" :style="`width: ${mapWidth}; height: ${mapHeight}`" />
 </template>
 
-
 <script>
-import Vue from "vue";
-import { mapState } from "vuex";
-import { mapActions } from "vuex";
-import { Plugins, KeyboardStyle } from "@capacitor/core";
-const { Geolocation } = Plugins;
-import * as VueGoogleMaps from "vue2-google-maps";
-import { coordinatesRef, firebaseAuth } from "boot/firebase";
-
-Vue.use(VueGoogleMaps, {
-  load: {
-    key: "AIzaSyCqbDsJ5lt1gxseVKXyPCbayQGqSyROtWQ",
-    libraries: "places, visualization"
-    //// If you want to set the version, you can do so:
-    // v: '3.26',
-  }
-});
-
 export default {
-  data() {
-    return {
-      position: "determining...",
-      center: {
-        lat: 40.3399,
-        lng: 127.5101
-      },
-      arrayObj: []
-    };
-  },
-
-  methods: {
-    getCurrentPosition() {
-      Geolocation.getCurrentPosition().then(position => {
-        this.position = position;
-      });
+  name: "c-heat-map",
+  props: {
+    lat: {
+      type: Number,
+      default: () => 37.775
     },
-
-    addToArray() {
-      coordinatesRef.on("value", gotdata, errData);
-      var array = [];
-      var that = this;
-      function gotdata(data) {
-        console.log(data.val());
-        var coordinates = data.val();
-        var keys = Object.keys(coordinates);
-        console.log("KEYS" + keys);
-        for (var i = 0; i < keys.length; i++) {
-          var k = keys[i];
-          var latitude = coordinates[k].latitude;
-          var longitude = coordinates[k].longitude;
-          array.push(new google.maps.LatLng(latitude, longitude));
-        }
-
-        that.arrayObj = array;
-        console.log("thatarray");
-        console.log(that.arrayObj);
+    lng: {
+      type: Number,
+      default: () => -122.434
+    },
+    initialZoom: {
+      type: Number,
+      default: () => 13
+    },
+    mapType: {
+      type: String,
+      default: () => "roadmap"
+    },
+    points: {
+      type: Array,
+      required: true
+    },
+    width: {
+      type: [String, Number],
+      default: () => "100%"
+    },
+    height: {
+      type: [String, Number],
+      default: () => "100%"
+    },
+    opacity: {
+      type: Number,
+      default: () => 1
+    },
+    maxIntensity: {
+      type: Number,
+      default: () => 5
+    }
+  },
+  computed: {
+    mapWidth() {
+      if (typeof this.width === "string") {
+        return this.width;
+      } else {
+        return `${this.width}px`;
       }
-
-      function errData(err) {
-        console.log("Error");
-        console.log(err);
+    },
+    mapHeight() {
+      if (typeof this.height === "string") {
+        return this.height;
+      } else {
+        return `${this.height}px`;
       }
+    },
+    heatmapPoints() {
+      return this.points.map(
+        // eslint-disable-next-line
+        point => new google.maps.LatLng(point.lat, point.lng)
+      );
     }
   },
   mounted() {
-    this.getCurrentPosition();
+    return this.$gmapApiPromiseLazy().then(() => {
+      // eslint-disable-next-line
+      this.$mapObject = new google.maps.Map(this.$refs.heatmap, {
+        zoom: this.initialZoom,
+        center: { lat: this.lat, lng: this.lng },
+        mapTypeId: this.mapType
+      });
+      // eslint-disable-next-line
+      this.$heatmap = new google.maps.visualization.HeatmapLayer({
+        data: this.heatmapPoints,
+        map: this.$mapObject,
+        opacity: this.opacity,
+        maxIntensity: this.maxIntensity
+      });
 
-    // we start listening
-    this.geoId = Geolocation.watchPosition(
-      { enableHighAccuracy: true },
-      (position, err) => {
-        console.log("New GPS position");
-        this.position = position;
-        Vue.set(this, "center", {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        });
-      }
-    );
-    this.addToArray();
-  },
-  beforeDestroy() {
-    // we do cleanup
-    Geolocation.clearWatch(this.geoId);
+      this.$heatmap.setMap(this.$mapObject);
+    });
   }
 };
 </script>

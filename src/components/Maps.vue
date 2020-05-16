@@ -2,30 +2,27 @@
 <template>
   <q-page padding>
     <template>
-      <div
-        :v-if="this.arrayObj">
-        
+      <div :v-if="this.arrayObj">
         <!-- <GmapMap
           id="map"
           :center="center"
           :zoom="7"
           map-type-id="terrain"
           style="width: 500px; height: 300px"
-        ></GmapMap> -->
-        <vue-google-heatmap 
+        ></GmapMap>-->
+        <vue-google-heatmap
+          class="map-style"
           v-if="this.arrayObj.length > 0"
           :points="arrayObj"
           :lat="center.lat"
           :lng="center.lng"
-          :initial-zoom=7
+          :initial-zoom="7"
           :width="400"
-          :height="350"/>
+          :height="350"
+        />
       </div>
     </template>
-    <q-btn @click="arrobj"> get coords </q-btn>
-    <div>
-      <p> {{ this.arrayObj }} </p>
-    </div>
+    <!-- <q-btn @click="arrobj"> get coords </q-btn> -->
   </q-page>
 </template>
 
@@ -38,8 +35,7 @@ import { Plugins, KeyboardStyle } from "@capacitor/core";
 const { Geolocation } = Plugins;
 import * as VueGoogleMaps from "vue2-google-maps";
 import { coordinatesRef, firebaseAuth } from "boot/firebase";
-import VueGoogleHeatmap from 'vue-google-heatmap';
-
+import VueGoogleHeatmap from "vue-google-heatmap";
 
 // Vue.use(VueGoogleMaps, {
 //   load: {
@@ -62,15 +58,14 @@ export default {
         lat: 39.6918784,
         lng: -89.6925696
       },
-      arrayObj: null,
-      
+      arrayObj: null
     };
   },
 
   methods: {
     arrobj() {
-      console.log(this.arrayObj)
-      console.log(this.arrayObj.length)
+      console.log(this.arrayObj);
+      console.log(this.arrayObj.length);
     },
     getCurrentPosition() {
       Geolocation.getCurrentPosition().then(position => {
@@ -83,8 +78,8 @@ export default {
       var that = this;
       function gotdata(data) {
         var array = [];
-        console.log("array")
-        console.log(array)
+        console.log("array");
+        console.log(array);
         // console.log(data.val());
         var coordinates = data.val();
         var keys = Object.keys(coordinates);
@@ -93,7 +88,7 @@ export default {
           var k = keys[i];
           var latitude = coordinates[k].latitude;
           var longitude = coordinates[k].longitude;
-          array.push({lat: latitude, lng: longitude});
+          array.push({ lat: latitude, lng: longitude });
         }
         that.arrayObj = array;
         console.log("array object");
@@ -113,7 +108,6 @@ export default {
     this.addToArray();
   },
   mounted() {
-    
     this.getCurrentPosition();
 
     // we start listening
@@ -136,3 +130,17 @@ export default {
   }
 };
 </script>
+<style>
+.map-style {
+  width: 1000px;
+  height: 1000px;
+  margin: 32px auto;
+}
+/* @media only screen and (max-device-width: 640px) {
+  .map-style {
+    width: 300px;
+    height: 360px;
+    margin: 32px auto;
+  }
+} */
+</style>

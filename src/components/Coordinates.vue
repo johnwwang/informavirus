@@ -1,14 +1,18 @@
 <template>
   <q-card>
     <template>
-      <div>
-        GPS position of {{ userDetails.name }} :
+      <div class="text-center">
+        <h4>GPS position of {{ userDetails.name.charAt(0).toUpperCase() + userDetails.name.slice(1) }} :</h4>
         <br />
-        <strong>Latitude: {{ position.coords.latitude }}</strong>
+        <p>
+          <b>Latitude:</b>
+          {{ position.coords.latitude }}
+        </p>
+        <p>
+          <b>Longitude:</b>
+          {{ position.coords.longitude }}
+        </p>
         <br />
-        <strong>Longitude: {{ position.coords.longitude }}</strong>
-        <br />
-        <strong>{{ coordObj }}</strong>
         <q-btn
           v-on:click="addCoords"
           elevated
@@ -17,6 +21,7 @@
           type="submit"
           label="Add Coordinate"
         />
+        <br />
       </div>
     </template>
   </q-card>
@@ -55,7 +60,7 @@ export default {
     },
     addCoords() {
       coordinatesRef.push(this.coordObj);
-      alert("added to database!");
+      alert("Added Coordinate to the Database!");
     }
   },
 
@@ -63,17 +68,19 @@ export default {
     this.getCurrentPosition();
 
     // we start listening
-    this.geoId = Geolocation.watchPosition({enableHighAccuracy: true}, (position, err) => {
-      console.log('New GPS position -- coordinates')
-      this.position = position
-      
-      // TURN ON TO ADD TO DATABASE
-      // coordinatesRef.push(this.coordObj)
-      this.coordObj.latitude = position.coords.latitude
-      this.coordObj.longitude = position.coords.longitude
-      this.coordObj.userId = firebaseAuth.currentUser.uid 
-      
-    })
+    this.geoId = Geolocation.watchPosition(
+      { enableHighAccuracy: true },
+      (position, err) => {
+        console.log("New GPS position -- coordinates");
+        this.position = position;
+
+        // TURN ON TO ADD TO DATABASE
+        // coordinatesRef.push(this.coordObj)
+        this.coordObj.latitude = position.coords.latitude;
+        this.coordObj.longitude = position.coords.longitude;
+        this.coordObj.userId = firebaseAuth.currentUser.uid;
+      }
+    );
   },
   beforeDestroy() {
     // we do cleanup
@@ -82,5 +89,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Vollkorn&display=swap");
+* {
+  font-family: "Vollkorn", serif;
+}
 </style>

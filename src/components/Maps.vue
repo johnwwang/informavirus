@@ -70,7 +70,6 @@ export default {
   methods: {
     arrobj() {
       console.log(this.arrayObj)
-      console.log(this.arrayObj.length)
     },
     getCurrentPosition() {
       Geolocation.getCurrentPosition().then(position => {

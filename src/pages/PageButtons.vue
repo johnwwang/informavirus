@@ -11,13 +11,16 @@
         round
         color="teal"
         label="NF"
+        to="/"
       />
     <q-space/>
       <q-btn
+        @click="changeFever"
         size="40px"
         round
         color="teal"
         label="F"
+        to="/"
       />
     </div>
 
@@ -26,6 +29,23 @@
 
 <script>
 export default {
-  
+  props: ['fever'],
+  data() {},
+
+
+methods: {
+  changeFever() {
+    Vue.set(this, fever,{
+      fever: false
+    })
+  }
+}
 }
 </script>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Vollkorn&display=swap");
+* {
+  font-family: "Vollkorn", serif;
+}
+</style>

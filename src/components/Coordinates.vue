@@ -46,7 +46,8 @@ export default {
       coordObj: {
         userId: "",
         latitude: "",
-        longitude: ""
+        longitude: "",
+        fever: false
       }
     };
   },

@@ -8,7 +8,7 @@ const routes = [
       { path: '/auth', component: () => import('pages/PageAuth.vue') },
       { path: '/buttons', component: () => import('pages/PageButtons.vue') }
     ]
-  }
+  }  
 ]
 
 // Always leave this as last one

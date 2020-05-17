@@ -2,6 +2,7 @@
 <template>
   <q-page padding>
     <template>
+      
       <div
         :v-if="this.arrayObj">
         
@@ -21,6 +22,7 @@
           :width="400"
           :height="350"/>
       </div>
+      
     </template>
   </q-page>
 </template>
@@ -98,12 +100,10 @@ export default {
       }
     }
   },
-  // beforeCreate() {
+
+  // created() {
   //   this.addToArray();
   // },
-  created() {
-    this.addToArray();
-  },
   mounted() {
     
     this.getCurrentPosition();

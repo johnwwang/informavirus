@@ -1,6 +1,15 @@
 <template>
   <q-card>
     <template>
+      <div class="q-pa-sm">
+      <q-btn 
+        
+        outline 
+        rounded 
+        color="primary" 
+        label="Go Back"
+        to='/buttons' />
+    </div>
       <div class="text-center">
         <h4>GPS position of {{ userDetails.name.charAt(0).toUpperCase() + userDetails.name.slice(1) }} :</h4>
         <br />

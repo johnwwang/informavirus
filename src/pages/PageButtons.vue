@@ -1,7 +1,6 @@
 <template>
   <q-page>
     <buttons />
-
   </q-page>
 </template>
 
@@ -13,8 +12,10 @@ export default {
   
   components: {
     'buttons' : require('components/Button.vue').default,
-    
   },
+  methods: {
+
+  }
 
 }
 </script>

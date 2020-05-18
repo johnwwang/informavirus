@@ -2,27 +2,25 @@
 <template>
   <q-page padding>
     <template>
-      
-      <div
-        :v-if="this.arrayObj">
-        
+      <div :v-if="this.arrayObj">
         <!-- <GmapMap
           id="map"
           :center="center"
           :zoom="7"
           map-type-id="terrain"
           style="width: 500px; height: 300px"
-        ></GmapMap> -->
-        <vue-google-heatmap 
-          v-if="this.arrayObj.length > 0"
+        ></GmapMap>-->
+        <vue-google-heatmap
+          :v-if="this.arrayObj.length >0 "
           :points="arrayObj"
           :lat="center.lat"
           :lng="center.lng"
-          :initial-zoom=7
-          :width="400"
-          :height="350"/>
+          :initial-zoom="7"
+          :width="this.windowWidth"
+          :height="this.windowHeight"
+          class="map"
+        />
       </div>
-      
     </template>
   </q-page>
 </template>
@@ -36,8 +34,7 @@ import { Plugins, KeyboardStyle } from "@capacitor/core";
 const { Geolocation } = Plugins;
 import * as VueGoogleMaps from "vue2-google-maps";
 import { coordinatesRef, firebaseAuth } from "boot/firebase";
-import VueGoogleHeatmap from 'vue-google-heatmap';
-
+import VueGoogleHeatmap from "vue-google-heatmap";
 
 // Vue.use(VueGoogleMaps, {
 //   load: {
@@ -52,24 +49,25 @@ Vue.use(VueGoogleHeatmap, {
 });
 
 export default {
+  props: ["tracking", "windowWidth", "windowHeight"],
   data() {
     return {
-      isLoaded: false,
       position: "determining...",
       center: {
         lat: 39.6918784,
         lng: -89.6925696
       },
-      arrayObj: null,
-      
+      arrayObj: null
     };
   },
 
   methods: {
     getCurrentPosition() {
-      Geolocation.getCurrentPosition().then(position => {
-        this.position = position;
-      });
+      if (this.tracking == "true") {
+        Geolocation.getCurrentPosition().then(position => {
+          this.position = position;
+        });
+      }
     },
 
     addToArray() {
@@ -77,8 +75,8 @@ export default {
       var that = this;
       function gotdata(data) {
         var array = [];
-        console.log("array")
-        console.log(array)
+        console.log("array");
+        console.log(array);
         // console.log(data.val());
         var coordinates = data.val();
         var keys = Object.keys(coordinates);
@@ -87,7 +85,7 @@ export default {
           var k = keys[i];
           var latitude = coordinates[k].latitude;
           var longitude = coordinates[k].longitude;
-          array.push({lat: latitude, lng: longitude});
+          array.push({ lat: latitude, lng: longitude });
         }
         that.arrayObj = array;
         console.log("array object");
@@ -105,21 +103,22 @@ export default {
   //   this.addToArray();
   // },
   mounted() {
-    
     this.getCurrentPosition();
 
     // we start listening
-    this.geoId = Geolocation.watchPosition(
-      { enableHighAccuracy: true },
-      (position, err) => {
-        // console.log("New GPS position");
-        this.position = position;
-        Vue.set(this, "center", {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        });
-      }
-    );
+    if (this.tracking == "true") {
+      this.geoId = Geolocation.watchPosition(
+        { enableHighAccuracy: true },
+        (position, err) => {
+          // console.log("New GPS position");
+          this.position = position;
+          Vue.set(this, "center", {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          });
+        }
+      );
+    }
     this.addToArray();
   },
   beforeDestroy() {
@@ -128,3 +127,22 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+:root {
+  --map-size: 600px;
+}
+
+@media (max-width: 500px) {
+  :root {
+    --map-size: 500px;
+  }
+}
+.map {
+  margin: auto;
+  width: 500px;
+  height: 500px;
+}
+
+/* @media screen (max-width); */
+</style>

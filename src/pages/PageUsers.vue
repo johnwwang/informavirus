@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div class="q-pa-sm">
-      <q-btn outline rounded color="primary" label="Go Back" to="/buttons" />
+      <q-btn outline rounded color="primary" label="Symptoms Page" to="/buttons" />
     </div>
     <coordinates v-bind:tracking="isTracking" />
     <div>

@@ -67,7 +67,7 @@ export default {
     addCoords() {
       if (this.tracking == "true") {
         coordinatesRef.push(this.coordObj);
-        alert("Added Coordinate to the Database!");
+
         console.log(this.tracking);
       } else {
         alert("not tracking!");

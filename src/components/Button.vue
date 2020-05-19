@@ -20,8 +20,8 @@
       />
     <q-space/>
       <q-btn
-         class = "qbutton"
-         @click = writetolocal(false)
+        class = "qbutton"
+        @click = writetolocal(false)
         size="40px"
         round
         color="teal"

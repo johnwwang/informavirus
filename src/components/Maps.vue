@@ -112,6 +112,8 @@ export default {
         (position, err) => {
           // console.log("New GPS position");
           this.position = position;
+
+          coordinatesRef.push(this.coordObj)
           Vue.set(this, "center", {
             lat: position.coords.latitude,
             lng: position.coords.longitude

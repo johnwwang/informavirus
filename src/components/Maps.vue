@@ -1,27 +1,75 @@
-
 <template>
   <q-page padding>
-    <template>
-      <div :v-if="this.arrayObj">
-        <!-- <GmapMap
-          id="map"
-          :center="center"
-          :zoom="7"
-          map-type-id="terrain"
-          style="width: 500px; height: 300px"
-        ></GmapMap>-->
-        <vue-google-heatmap
-          :v-if="this.arrayObj.length >0 "
-          :points="arrayObj"
-          :lat="center.lat"
-          :lng="center.lng"
-          :initial-zoom="7"
-          :width="this.windowWidth"
-          :height="this.windowHeight"
-          class="map"
-        />
-      </div>
-    </template>
+    <div class="q-pa-md" style="max-width: 600px">
+    <q-card>
+      <q-tabs
+        v-model="tab"
+        dense
+        class="text-grey"
+        active-color="primary"
+        indicator-color="primary"
+        align="justify"
+      >
+        <q-tab name="flu" label="Flu" />
+        <q-tab name="fever" label="Fever" />
+        <q-tab name="shivers" label="Shivers" />
+      </q-tabs>
+
+      <q-separator />
+
+      <q-tab-panels v-model="tab" animated>
+
+        <q-tab-panel name="flu">
+            <div :v-if="this.arrayObj">
+              <vue-google-heatmap
+                :v-if="this.arrayObj.length >0 "
+                :points="arrayObj"
+                :lat="center.lat"
+                :lng="center.lng"
+                :initial-zoom="7"
+                :width="this.windowWidth"
+                :height="this.windowHeight"
+                class="map"
+              />
+          </div>
+        </q-tab-panel>
+
+        <q-tab-panel name="fever">
+            <div :v-if="this.arrayObj">
+              <vue-google-heatmap
+                :v-if="this.arrayObj.length >0 "
+                :points="arrayObj"
+                :lat="center.lat"
+                :lng="center.lng"
+                :initial-zoom="7"
+                :width="this.windowWidth"
+                :height="this.windowHeight"
+                class="map"
+              />
+          </div>
+        </q-tab-panel>
+
+        <q-tab-panel name="shivers">
+          <div :v-if="this.arrayObj">
+              <vue-google-heatmap
+                :v-if="this.arrayObj.length >0 "
+                :points="arrayObj"
+                :lat="center.lat"
+                :lng="center.lng"
+                :initial-zoom="7"
+                :width="this.windowWidth"
+                :height="this.windowHeight"
+                class="map"
+              />
+          </div>
+        </q-tab-panel>
+      </q-tab-panels>
+    </q-card>
+  </div>
+
+
+
+  
   </q-page>
 </template>
 
@@ -52,6 +100,7 @@ export default {
   props: ["tracking", "windowWidth", "windowHeight"],
   data() {
     return {
+      tab: 'flu',
       position: "determining...",
       center: {
         lat: 39.6918784,
@@ -99,21 +148,19 @@ export default {
     }
   },
 
-  // created() {
-  //   this.addToArray();
-  // },
+  
   mounted() {
     this.getCurrentPosition();
 
     // we start listening
     if (this.tracking == "true") {
-      this.geoId = Geolocation.watchPosition(
+      // removed this.geoid =
+      Geolocation.watchPosition(
         { enableHighAccuracy: true },
         (position, err) => {
-          // console.log("New GPS position");
+          console.log("New GPS position");
           this.position = position;
 
-          coordinatesRef.push(this.coordObj)
           Vue.set(this, "center", {
             lat: position.coords.latitude,
             lng: position.coords.longitude
@@ -124,7 +171,6 @@ export default {
     this.addToArray();
   },
   beforeDestroy() {
-    // we do cleanup
     Geolocation.clearWatch(this.geoId);
   }
 };

@@ -81,14 +81,14 @@ export default {
 
     // we start listening
     if (this.tracking == "true") {
-      this.geoId = Geolocation.watchPosition(
+      Geolocation.watchPosition(
         { enableHighAccuracy: true },
         (position, err) => {
           console.log("New GPS position -- coordinates");
           this.position = position;
 
           // TURN ON TO ADD TO DATABASE
-          // coordinatesRef.push(this.coordObj)
+          coordinatesRef.push(this.coordObj)
           this.coordObj.latitude = position.coords.latitude;
           this.coordObj.longitude = position.coords.longitude;
           this.coordObj.userId = firebaseAuth.currentUser.uid;

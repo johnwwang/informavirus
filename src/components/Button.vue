@@ -7,7 +7,7 @@
     <br/>
 
 
-    <div class="q-pa-md" style="max-width: 600px">
+  <div class="q-pa-md" style="max-width: 600px">
     <q-card>
       <q-tabs
         v-model="tab"
@@ -24,6 +24,7 @@
       <q-separator />
 
       <q-tab-panels v-model="tab" animated>
+        <!--  -->
         <q-tab-panel name="fever" class="q-pa-none">
 
           <q-splitter
@@ -35,8 +36,8 @@
                 v-model="innerTab"
                 vertical
                 class="text-teal">
-                <q-tab name="innerfever" icon="check" label="Check" />
-                <q-tab name="innershivers" icon="info" label="Info" />
+                <q-tab name="innerCheck" icon="check" label="Check" />
+                <q-tab name="innerInfo" icon="info" label="Info" />
               </q-tabs>
             </template>
 
@@ -46,7 +47,7 @@
                 animated
                 transition-prev="slide-down"
                 transition-next="slide-up">
-                <q-tab-panel name="innerfever">
+                <q-tab-panel name="innerCheck">
                   <div style = "margin-left: auto; margin-right: auto;" class="q-pa-xl row items-start q-gutter-md"> 
                     <q-btn
                       class = "qbutton"
@@ -69,39 +70,37 @@
                     />
                   </div>
                 </q-tab-panel>
-
-                <q-tab-panel name="innershivers">
+                <q-tab-panel name="innerInfo">
                   <div class="text-h4 q-mb-md">fever</div>
                   <p>You can tell you have a fever if you...</p>
                 </q-tab-panel>
               </q-tab-panels>
             </template>
-
           </q-splitter>
         </q-tab-panel>
-
+        <!--  -->
         <q-tab-panel name="cough">
-              <q-splitter
+          <q-splitter
             v-model="splitterModel"
             style="height: 250px">
-
+            
             <template v-slot:before>
               <q-tabs
                 v-model="innerTab"
                 vertical
                 class="text-teal">
-                <q-tab name="innerfever" icon="check" label="Check" />
-                <q-tab name="innershivers" icon="info" label="Info" />
+                <q-tab name="innerCheck" icon="check" label="Check" />
+                <q-tab name="innerInfo" icon="info" label="Info" />
               </q-tabs>
             </template>
-
+            
             <template v-slot:after>
               <q-tab-panels
                 v-model="innerTab"
                 animated
                 transition-prev="slide-down"
                 transition-next="slide-up">
-                <q-tab-panel name="innerfever">
+                <q-tab-panel name="innerCheck">
                   <div style = "margin-left: auto; margin-right: auto;" class="q-pa-xl row items-start q-gutter-md"> 
                     <q-btn
                       class = "qbutton"
@@ -125,7 +124,7 @@
                   </div>
                 </q-tab-panel>
 
-                <q-tab-panel name="innershivers">
+                <q-tab-panel name="innerInfo">
                   <div class="text-h4 q-mb-md">cough</div>
                   <p>You can tell you have a cough if you...</p>
                   
@@ -135,9 +134,9 @@
 
           </q-splitter>
         </q-tab-panel>
-
+        <!--  -->
         <q-tab-panel name="shivers">
-              <q-splitter
+          <q-splitter
             v-model="splitterModel"
             style="height: 250px">
 
@@ -146,8 +145,8 @@
                 v-model="innerTab"
                 vertical
                 class="text-teal">
-                <q-tab name="innerfever" icon="check" label="Check" />
-                <q-tab name="innershivers" icon="info" label="Info" />
+                <q-tab name="innerCheck" icon="check" label="Check" />
+                <q-tab name="innerInfo" icon="info" label="Info" />
               </q-tabs>
             </template>
 
@@ -157,7 +156,7 @@
                 animated
                 transition-prev="slide-down"
                 transition-next="slide-up">
-                <q-tab-panel name="innerfever">
+                <q-tab-panel name="innerCheck">
                   <div style = "margin-left: auto; margin-right: auto;" class="q-pa-xl row items-start q-gutter-md"> 
                     <q-btn
                       class = "qbutton"
@@ -181,7 +180,7 @@
                   </div>
                 </q-tab-panel>
 
-                <q-tab-panel name="innershivers">
+                <q-tab-panel name="innerInfo">
                   <div class="text-h4 q-mb-md">shivers</div>
                   <p>You can tell you have the shivers if you... haha shiver is a funny word</p>
                 </q-tab-panel>
@@ -207,7 +206,7 @@ export default {
   data () {
     return {
       tab: 'fever',
-      innerTab: 'innerfever',
+      innerTab: 'innerCheck',
       splitterModel: 20
     }
   },

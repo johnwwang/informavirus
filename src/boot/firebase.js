@@ -29,4 +29,5 @@ let coordinatesRef = firebaseDb.ref('coordinates');
 
 
 
+
 export { firebaseAuth, firebaseDb, coordinatesRef }

@@ -3,10 +3,15 @@
     <div class="q-pa-sm">
       <q-btn outline rounded color="primary" label="Symptoms Page" to="/buttons" />
     </div>
-    <coordinates v-bind:tracking="isTracking" />
+      <coordinates 
+        v-bind:trackingF="isTrackingF"
+        v-bind:trackingC="isTrackingC"
+        v-bind:trackingS="isTrackingS" />
     <div>
       <maps
-        v-bind:tracking="isTracking"
+        v-bind:trackingF="isTrackingF"
+        v-bind:trackingC="isTrackingC"
+        v-bind:trackingS="isTrackingS"
         v-bind:windowWidth="windowWidth"
         v-bind:windowHeight="windowHeight - 250"
         :key="componentkey"
@@ -19,10 +24,13 @@
 import Vue from "vue";
 // Vue.forceUpdate();
 export default {
+  props: ["decision"],
   data: {
     windowWidth: window.innerWidth,
     windowHeight: window.innerHeight,
-    isTracking: null,
+    isTrackingF: null,
+    isTrackingC: null,
+    isTrackingS: null,
     componentkey: 0
   },
   components: {
@@ -38,14 +46,25 @@ export default {
         } else localStorage.removeItem("firstLoad");
       }
     },
-    loadtracking() {
-      this.isTracking = window.localStorage.getItem("isTracking");
-      console.log(this.isTracking);
+    loadtrackingF() {
+      this.isTrackingF = window.localStorage.getItem("isTrackingF");
+      console.log(this.isTrackingF);
+    },
+    loadtrackingC() {
+      this.isTrackingC = window.localStorage.getItem("isTrackingC");
+      console.log(this.isTrackingC);
+    },
+    loadtrackingS() {
+      this.isTrackingS = window.localStorage.getItem("isTrackingS");
+      console.log(this.isTrackingS);
     }
   },
   created() {
+    decision == false
     this.load();
-    this.loadtracking();
+    this.loadtrackingF();
+    this.loadtrackingC();
+    this.loadtrackingS();
     this.windowWidth = window.innerWidth;
     this.windowHeight = window.innerHeight;
   },

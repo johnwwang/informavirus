@@ -23,7 +23,8 @@
 
       <q-separator />
 
-      <q-tab-panels v-model="tab" animated>
+      <q-tab-panels v-model="tab" animated ref="panelName">
+        
         <!--  -->
         <q-tab-panel name="fever" class="q-pa-none">
 
@@ -51,22 +52,21 @@
                   <div style = "margin-left: auto; margin-right: auto;" class="q-pa-xl row items-start q-gutter-md"> 
                     <q-btn
                       class = "qbutton"
-                      @click = writetolocal(true) 
+                      @click = FhandlerYes()
                       size="20px"
                       round
                       color="teal"
                       label="Yes"
-                      to="/"
                     />
                   <q-space/>
                     <q-btn
                       class = "qbutton"
-                      @click = writetolocal(false)
+                      @click = FhandlerNo()
                       size="20px"
                       round
                       color="teal"
                       label="No"
-                      to="/"
+                     
                     />
                   </div>
                 </q-tab-panel>
@@ -104,22 +104,20 @@
                   <div style = "margin-left: auto; margin-right: auto;" class="q-pa-xl row items-start q-gutter-md"> 
                     <q-btn
                       class = "qbutton"
-                      @click = writetolocal(true) 
+                      @click = ChandlerYes()
                       size="20px"
                       round
                       color="teal"
                       label="Yes"
-                      to="/"
                     />
                   <q-space/>
                     <q-btn
                       class = "qbutton"
-                      @click = writetolocal(false)
+                      @click = ChandlerNo()
                       size="20px"
                       round
                       color="teal"
                       label="No"
-                      to="/"
                     />
                   </div>
                 </q-tab-panel>
@@ -159,24 +157,24 @@
                 <q-tab-panel name="innerCheck">
                   <div style = "margin-left: auto; margin-right: auto;" class="q-pa-xl row items-start q-gutter-md"> 
                     <q-btn
-                      class = "qbutton"
-                      @click = writetolocal(true) 
-                      size="20px"
-                      round
-                      color="teal"
-                      label="Yes"
-                      to="/"
-                    />
-                  <q-space/>
-                    <q-btn
-                      class = "qbutton"
-                      @click = writetolocal(false)
-                      size="20px"
-                      round
-                      color="teal"
-                      label="No"
-                      to="/"
-                    />
+                        class = "qbutton"
+                        @click = ShandlerYes()
+                        size="20px"
+                        round
+                        color="teal"
+                        label="Yes"
+                        to="/"
+                      />
+                    <q-space/>
+                      <q-btn
+                        class = "qbutton"
+                        @click = ShandlerNo()
+                        size="20px"
+                        round
+                        color="teal"
+                        label="No"
+                        to="/"
+                      />
                   </div>
                 </q-tab-panel>
 
@@ -194,9 +192,7 @@
   </div>
 
 
-
-
-    
+ 
   </q-page>
 </template>
 
@@ -207,13 +203,52 @@ export default {
     return {
       tab: 'fever',
       innerTab: 'innerCheck',
-      splitterModel: 20
+      splitterModel: 20,
+      decision: false
     }
   },
 
   methods: {
-    writetolocal (trackingbool) {
-      window.localStorage.setItem("isTracking", trackingbool)
+    nextTab () {
+      this.$refs.panelName.next()
+    },
+    decidePage () {
+      decision = true
+    },
+    writetolocalFever (trackingbool) {
+      window.localStorage.setItem("isTrackingF", trackingbool)
+    },
+    writetolocalCough (trackingbool) {
+      window.localStorage.setItem("isTrackingC", trackingbool)
+    },
+    writetolocalShivers (trackingbool) {
+      window.localStorage.setItem("isTrackingS", trackingbool)
+    },  
+    FhandlerYes () {
+      this.writetolocalFever(true)
+      this.nextTab()
+      this.decidePage()
+    },
+    FhandlerNo () {
+      this.writetolocalFever(false)
+      this.nextTab()
+    },
+    ChandlerYes () {
+      this.writetolocalCough(true)
+      this.nextTab()
+      this.decidePage()
+    },
+    ChandlerNo () {
+      this.writetolocalCough(false)
+      this.nextTab()
+    },
+    ShandlerYes () {
+      this.writetolocalShivers(true)
+      this.nextTab()
+      this.decidePage()
+    },
+    ShandlerNo () {
+      this.writetolocalShivers(false)
     }
   }
 }

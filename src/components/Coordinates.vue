@@ -1,7 +1,10 @@
 <template>
   <q-card>
     <template>
-      <div v-if="this.tracking == 'true'" class="text-center">
+      <div 
+        v-if="this.trackingF == true" 
+        class="text-center">
+
         <h4>{{(userDetails.name.charAt(0).toUpperCase()+userDetails.name.slice(1)).trim()}}'s Current Position:</h4>
         <p>
           <b>Latitude:</b>
@@ -40,7 +43,7 @@ import * as VueGoogleMaps from "vue2-google-maps";
 import { coordinatesRef, firebaseAuth } from "boot/firebase";
 
 export default {
-  props: ["tracking"],
+  props: ["trackingF", "trackingC", "trackingS"],
   computed: {
     ...mapState("store", ["userDetails"])
   },
@@ -49,15 +52,19 @@ export default {
       position: "determining...",
       coordObj: {
         userId: "",
-        latitude: "",
-        longitude: ""
+        FLatitude: "",
+        FLongitude: "",
+        CLatitude: "",
+        CLongitude: "",
+        SLatitude: "",
+        SLongitude: "",
       }
     };
   },
   methods: {
     // ...mapActions('locationStore', ['changeCoord']),
     getCurrentPosition() {
-      if (this.tracking == "true") {
+      if (this.trackingF == "true" || this.trackingC == "true" || this.trackingS == "true") {
         Geolocation.getCurrentPosition().then(position => {
           console.log("Current", position);
           this.position = position;
@@ -65,13 +72,10 @@ export default {
       }
     },
     addCoords() {
-      if (this.tracking == "true") {
+      if (this.trackingF == "true" || this.trackingC == "true" || this.trackingS == "true") {
         coordinatesRef.push(this.coordObj);
-
-        console.log(this.tracking);
       } else {
         alert("not tracking!");
-        console.log(this.tracking);
       }
     }
   },
@@ -80,7 +84,7 @@ export default {
     this.getCurrentPosition();
 
     // we start listening
-    if (this.tracking == "true") {
+    if (this.trackingF == "true" || this.trackingC == "true" || this.trackingS == "true") {
       Geolocation.watchPosition(
         { enableHighAccuracy: true },
         (position, err) => {
@@ -89,8 +93,12 @@ export default {
 
           // TURN ON TO ADD TO DATABASE
           // coordinatesRef.push(this.coordObj)
-          this.coordObj.latitude = position.coords.latitude;
-          this.coordObj.longitude = position.coords.longitude;
+          this.coordObj.FLatitude = position.coords.latitude;
+          this.coordObj.FLongitude = position.coords.longitude;
+          this.coordObj.CLatitude = position.coords.latitude;
+          this.coordObj.CLongitude = position.coords.longitude;
+          this.coordObj.SLatitude = position.coords.latitude;
+          this.coordObj.SLongitude = position.coords.longitude;
           this.coordObj.userId = firebaseAuth.currentUser.uid;
         }
       );

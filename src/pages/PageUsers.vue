@@ -24,7 +24,6 @@
 import Vue from "vue";
 // Vue.forceUpdate();
 export default {
-  props: ["decision"],
   data: {
     windowWidth: window.innerWidth,
     windowHeight: window.innerHeight,
@@ -60,7 +59,6 @@ export default {
     }
   },
   created() {
-    decision == false
     this.load();
     this.loadtrackingF();
     this.loadtrackingC();

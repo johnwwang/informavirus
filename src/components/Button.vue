@@ -204,16 +204,12 @@ export default {
       tab: 'fever',
       innerTab: 'innerCheck',
       splitterModel: 20,
-      decision: false
     }
   },
 
   methods: {
     nextTab () {
       this.$refs.panelName.next()
-    },
-    decidePage () {
-      decision = 'true'
     },
     writetolocalFever (trackingbool) {
       window.localStorage.setItem("isTrackingF", trackingbool)
@@ -227,7 +223,6 @@ export default {
     FhandlerYes () {
       this.writetolocalFever(true)
       this.nextTab()
-      this.decidePage()
     },
     FhandlerNo () {
       this.writetolocalFever(false)
@@ -236,7 +231,6 @@ export default {
     ChandlerYes () {
       this.writetolocalCough(true)
       this.nextTab()
-      this.decidePage()
     },
     ChandlerNo () {
       this.writetolocalCough(false)
@@ -245,7 +239,6 @@ export default {
     ShandlerYes () {
       this.writetolocalShivers(true)
       this.nextTab()
-      this.decidePage()
     },
     ShandlerNo () {
       this.writetolocalShivers(false)

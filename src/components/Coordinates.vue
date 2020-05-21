@@ -2,7 +2,7 @@
   <q-card>
     <template>
       <div 
-        v-if="this.trackingF == 'true'" 
+        v-if="this.trackingF == 'true' || this.trackingC == 'true' || this.trackingS == 'true'" 
         class="text-center">
 
         <h4>{{(userDetails.name.charAt(0).toUpperCase()+userDetails.name.slice(1)).trim()}}'s Current Position:</h4>

@@ -213,7 +213,7 @@ export default {
       this.$refs.panelName.next()
     },
     decidePage () {
-      decision = true
+      decision = 'true'
     },
     writetolocalFever (trackingbool) {
       window.localStorage.setItem("isTrackingF", trackingbool)

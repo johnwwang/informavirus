@@ -22,7 +22,7 @@
         <q-tab-panel name="fever">
             <div :v-if="this.FArrayObj">
               <vue-google-heatmap
-                :v-if="this.FArrayObj"
+                :v-if="this.FArrayObj.length > 0"
                 :points="FArrayObj"
                 :lat="center.lat"
                 :lng="center.lng"

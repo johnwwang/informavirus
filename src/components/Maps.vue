@@ -54,8 +54,8 @@ export default {
     return {
       position: "determining...",
       center: {
-        lat: 39.6918784,
-        lng: -89.6925696
+        lat: 41.8781,
+        lng: -87.6298
       },
       arrayObj: null
     };

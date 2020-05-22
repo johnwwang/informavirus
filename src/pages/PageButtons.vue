@@ -7,13 +7,9 @@
 
 <script>
 export default {
-  
   components: {
-    'buttons' : require('components/Button.vue').default,
+    buttons: require("components/Button.vue").default
   },
-  methods: {
-
-  }
-
-}
+  methods: {}
+};
 </script>

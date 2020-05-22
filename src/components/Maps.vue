@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <div class="q-pa-md" style="max-width: 600px">
+    <div class="q-pa-md" style="max-width: 600px; margin: auto;">
       <q-tabs
         v-model="tab"
         dense
@@ -14,58 +14,53 @@
         <q-tab name="shivers" label="Shivers" />
       </q-tabs>
 
-      <q-tab-panels v-model="tab" animated >
-
+      <q-tab-panels v-model="tab" animated>
         <q-tab-panel name="fever">
-            <div :v-if="this.FArrayObj">
-              <vue-google-heatmap
-                :v-if="this.FArrayObj.length > 0"
-                :points="FArrayObj"
-                :lat="center.lat"
-                :lng="center.lng"
-                :initial-zoom="7"
-                :width="this.windowWidth"
-                :height="this.windowHeight"
-                class="map"
-              />
+          <div :v-if="this.FArrayObj">
+            <vue-google-heatmap
+              :v-if="this.FArrayObj.length > 0"
+              :points="FArrayObj"
+              :lat="center.lat"
+              :lng="center.lng"
+              :initial-zoom="7"
+              :width="this.windowWidth"
+              :height="this.windowHeight"
+              class="map"
+            />
           </div>
         </q-tab-panel>
 
         <q-tab-panel name="cough">
-            <div :v-if="this.CArrayObj">
-              <vue-google-heatmap
-                :v-if="this.CArrayObj.length > 0 "
-                :points="CArrayObj"
-                :lat="center.lat"
-                :lng="center.lng"
-                :initial-zoom="7"
-                :width="this.windowWidth"
-                :height="this.windowHeight"
-                class="map"
-              />
+          <div :v-if="this.CArrayObj">
+            <vue-google-heatmap
+              :v-if="this.CArrayObj.length > 0 "
+              :points="CArrayObj"
+              :lat="center.lat"
+              :lng="center.lng"
+              :initial-zoom="7"
+              :width="this.windowWidth"
+              :height="this.windowHeight"
+              class="map"
+            />
           </div>
         </q-tab-panel>
 
         <q-tab-panel name="shivers">
           <div :v-if="this.SArrayObj">
-              <vue-google-heatmap
-                :v-if="this.SArrayObj.length > 0 "
-                :points="SArrayObj"
-                :lat="center.lat"
-                :lng="center.lng"
-                :initial-zoom="7"
-                :width="this.windowWidth"
-                :height="this.windowHeight"
-                class="map"
-              />
+            <vue-google-heatmap
+              :v-if="this.SArrayObj.length > 0 "
+              :points="SArrayObj"
+              :lat="center.lat"
+              :lng="center.lng"
+              :initial-zoom="7"
+              :width="this.windowWidth"
+              :height="this.windowHeight"
+              class="map"
+            />
           </div>
         </q-tab-panel>
       </q-tab-panels>
-  </div>
-
-
-
-  
+    </div>
   </q-page>
 </template>
 
@@ -80,7 +75,6 @@ import * as VueGoogleMaps from "vue2-google-maps";
 import { coordinatesRef, firebaseAuth } from "boot/firebase";
 import VueGoogleHeatmap from "vue-google-heatmap";
 
-
 Vue.use(VueGoogleHeatmap, {
   apiKey: "AIzaSyCqbDsJ5lt1gxseVKXyPCbayQGqSyROtWQ"
 });
@@ -89,7 +83,7 @@ export default {
   props: ["trackingF", "trackingC", "trackingS", "windowWidth", "windowHeight"],
   data() {
     return {
-      tab: 'fever',
+      tab: "fever",
       position: "determining...",
       center: {
         lat: 41.8781,
@@ -97,13 +91,17 @@ export default {
       },
       FArrayObj: null,
       CArrayObj: null,
-      SArrayObj: null,
+      SArrayObj: null
     };
   },
 
   methods: {
     getCurrentPosition() {
-      if (this.trackingF == "true" || this.trackingC == "true" || this.trackingS == "true") {
+      if (
+        this.trackingF == "true" ||
+        this.trackingC == "true" ||
+        this.trackingS == "true"
+      ) {
         Geolocation.getCurrentPosition().then(position => {
           this.position = position;
         });
@@ -154,12 +152,15 @@ export default {
     }
   },
 
-  
   mounted() {
     this.getCurrentPosition();
 
     // we start listening
-    if (this.trackingF == "true" || this.trackingC == "true" || this.trackingS == "true") {
+    if (
+      this.trackingF == "true" ||
+      this.trackingC == "true" ||
+      this.trackingS == "true"
+    ) {
       // removed this.geoid =
       Geolocation.watchPosition(
         { enableHighAccuracy: true },

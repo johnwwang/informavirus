@@ -6,8 +6,6 @@
 
 
 <script>
-import Vue from 'vue';
-// Vue.forceUpdate();
 export default {
   
   components: {

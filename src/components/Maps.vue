@@ -80,14 +80,7 @@ import * as VueGoogleMaps from "vue2-google-maps";
 import { coordinatesRef, firebaseAuth } from "boot/firebase";
 import VueGoogleHeatmap from "vue-google-heatmap";
 
-// Vue.use(VueGoogleMaps, {
-//   load: {
-//     key: "AIzaSyCqbDsJ5lt1gxseVKXyPCbayQGqSyROtWQ",
-//     libraries: "places, visualization"
-//     //// If you want to set the version, you can do so:
-//     // v: '3.26',
-//   }
-// });
+
 Vue.use(VueGoogleHeatmap, {
   apiKey: "AIzaSyCqbDsJ5lt1gxseVKXyPCbayQGqSyROtWQ"
 });

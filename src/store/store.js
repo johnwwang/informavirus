@@ -22,6 +22,7 @@ const actions = {
         name: payload.name,
         email: payload.email
       })
+      this.$router.push('/buttons')
     })
     .catch(error => {
       console.log(error.message);
@@ -31,10 +32,12 @@ const actions = {
      firebaseAuth.signInWithEmailAndPassword(payload.email, payload.password)
      .then(response => {
        console.log(response)
+      //  this.$router.push('/buttons')
      })
      .catch(error => {
       console.log(error.message);
     })
+    
   },
   logoutUser() {
     firebaseAuth.signOut()
@@ -57,7 +60,7 @@ const actions = {
         })
         // IF SOMETHING IS WRONG WITH HANDLAUTHSTATECHANGED, MOVE this.$routerpush('/')
         // BELOW console.log('snapshot', snapshot)
-          this.$router.push('/')
+          
       }
       else {
         //user is logged out

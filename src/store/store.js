@@ -47,7 +47,6 @@ const actions = {
         firebaseDb.ref('users/' + userId).once('value', snapshot => {
           console.log('snapshot', snapshot)
           
-          //WHAT IS A SNAPSHOT -- VIDEO 8 goes over all of this
           let userDetails = snapshot.val()
           console.log('userDetails:', userDetails)
           commit('setUserDetails', {
@@ -58,13 +57,12 @@ const actions = {
         })
         // IF SOMETHING IS WRONG WITH HANDLAUTHSTATECHANGED, MOVE this.$routerpush('/')
         // BELOW console.log('snapshot', snapshot)
-        this.$router.push('/')
+          this.$router.push('/')
       }
       else {
         //user is logged out
         commit('setUserDetails', {})
         this.$router.replace('/auth')
-        
       }
     })
   }

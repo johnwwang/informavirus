@@ -1,7 +1,8 @@
 <template>
-  <q-card>
-    <template>
-      <div v-if="this.tracking == 'true'" class="text-center">
+      <div 
+        v-if="this.trackingF == 'true' || this.trackingC == 'true' || this.trackingS == 'true'" 
+        class="text-center">
+
         <h4>{{(userDetails.name.charAt(0).toUpperCase()+userDetails.name.slice(1)).trim()}}'s Current Position:</h4>
         <p>
           <b>Latitude:</b>
@@ -21,13 +22,10 @@
           type="submit"
           label="Add Coordinate"
         />
-        <br />
       </div>
       <div v-else class="text-center">
         <h4>Heatmap of symptoms (you are not being tracked)</h4>
       </div>
-    </template>
-  </q-card>
 </template>
 
 <script>
@@ -40,24 +38,33 @@ import * as VueGoogleMaps from "vue2-google-maps";
 import { coordinatesRef, firebaseAuth } from "boot/firebase";
 
 export default {
-  props: ["tracking"],
+  props: ["trackingF", "trackingC", "trackingS"],
   computed: {
     ...mapState("store", ["userDetails"])
   },
   data() {
     return {
       position: "determining...",
-      coordObj: {
+      FCoordObj: {
         userId: "",
-        latitude: "",
-        longitude: ""
+        FLatitude: "",
+        FLongitude: "",
+      },
+      CCoordObj: {
+        userId: "",
+        CLatitude: "",
+        CLongitude: "",
+      },
+      SCoordObj:{
+        userId: "",
+        SLatitude: "",
+        SLongitude: "",
       }
     };
   },
   methods: {
-    // ...mapActions('locationStore', ['changeCoord']),
     getCurrentPosition() {
-      if (this.tracking == "true") {
+      if (this.trackingF == "true" || this.trackingC == "true" || this.trackingS == "true") {
         Geolocation.getCurrentPosition().then(position => {
           console.log("Current", position);
           this.position = position;
@@ -65,14 +72,16 @@ export default {
       }
     },
     addCoords() {
-      if (this.tracking == "true") {
-        coordinatesRef.push(this.coordObj);
-
-        console.log(this.tracking);
-      } else {
-        alert("not tracking!");
-        console.log(this.tracking);
+      if (this.trackingF == "true") {
+        coordinatesRef.push(this.FCoordObj);
       }
+      if (this.trackingC == "true") {
+        coordinatesRef.push(this.CCoordObj);
+      }
+      if (this.trackingS == "true") {
+        coordinatesRef.push(this.SCoordObj);
+      }
+      console.log("hello")
     }
   },
 
@@ -80,8 +89,8 @@ export default {
     this.getCurrentPosition();
 
     // we start listening
-    if (this.tracking == "true") {
-      this.geoId = Geolocation.watchPosition(
+    if (this.trackingF == "true" || this.trackingC == "true" || this.trackingS == "true") {
+      Geolocation.watchPosition(
         { enableHighAccuracy: true },
         (position, err) => {
           console.log("New GPS position -- coordinates");
@@ -89,9 +98,16 @@ export default {
 
           // TURN ON TO ADD TO DATABASE
           // coordinatesRef.push(this.coordObj)
-          this.coordObj.latitude = position.coords.latitude;
-          this.coordObj.longitude = position.coords.longitude;
-          this.coordObj.userId = firebaseAuth.currentUser.uid;
+          this.FCoordObj.FLatitude = position.coords.latitude;
+          this.FCoordObj.FLongitude = position.coords.longitude;
+          this.FCoordObj.userId = firebaseAuth.currentUser.uid;
+          this.CCoordObj.CLatitude = position.coords.latitude;
+          this.CCoordObj.CLongitude = position.coords.longitude;
+          this.CCoordObj.userId = firebaseAuth.currentUser.uid;
+          this.SCoordObj.SLatitude = position.coords.latitude;
+          this.SCoordObj.SLongitude = position.coords.longitude;
+          this.SCoordObj.userId = firebaseAuth.currentUser.uid;
+          
         }
       );
     }

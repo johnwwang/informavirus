@@ -45,7 +45,7 @@ export default {
     title() {
       console.log(this.$route)
       let currentPath = this.$route.fullPath
-      if (currentPath == '/') return 'InformaVirus'
+      if (currentPath == '/' || currentPath == '/buttons') return 'InformaVirus'
       else if (currentPath == '/auth') return 'Login'
     }
   },

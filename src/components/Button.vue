@@ -192,15 +192,15 @@
   <div class="q-pa-md absolute-bottom-right">
     <q-btn 
     round 
-    icon="help_outline" 
+    icon="warning" 
     size="20px"
-    color="grey"/>
+    color="black"/>
   </div>
 
   <div class="q-pa-md q-gutter-md absolute-bottom-right" style="font-size: 36px">
       <q-icon  class="text-purple cursor-pointer">
       <q-popup-proxy :offset="[10, 10]">
-        <q-banner class="bg-purple text-white">
+        <q-banner class="bg-black text-white">
           <template v-slot:avatar>
             <q-icon/>
           </template>

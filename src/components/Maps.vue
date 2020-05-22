@@ -1,7 +1,6 @@
 <template>
   <q-page padding>
     <div class="q-pa-md" style="max-width: 600px">
-    <q-card>
       <q-tabs
         v-model="tab"
         dense
@@ -15,9 +14,7 @@
         <q-tab name="shivers" label="Shivers" />
       </q-tabs>
 
-      <q-separator />
-
-      <q-tab-panels v-model="tab" animated>
+      <q-tab-panels v-model="tab" animated >
 
         <q-tab-panel name="fever">
             <div :v-if="this.FArrayObj">
@@ -37,7 +34,7 @@
         <q-tab-panel name="cough">
             <div :v-if="this.CArrayObj">
               <vue-google-heatmap
-                :v-if="this.CArrayObj.length >0 "
+                :v-if="this.CArrayObj.length > 0 "
                 :points="CArrayObj"
                 :lat="center.lat"
                 :lng="center.lng"
@@ -52,7 +49,7 @@
         <q-tab-panel name="shivers">
           <div :v-if="this.SArrayObj">
               <vue-google-heatmap
-                :v-if="this.SArrayObj.length >0 "
+                :v-if="this.SArrayObj.length > 0 "
                 :points="SArrayObj"
                 :lat="center.lat"
                 :lng="center.lng"
@@ -64,7 +61,6 @@
           </div>
         </q-tab-panel>
       </q-tab-panels>
-    </q-card>
   </div>
 
 
@@ -140,23 +136,28 @@ export default {
           var CLongitude = coordinates[k].CLongitude;
           var SLatitude = coordinates[k].SLatitude;
           var SLongitude = coordinates[k].SLongitude;
-          FArray.push({ lat: FLatitude, lng: FLongitude });
-          CArray.push({ lat: CLatitude, lng: CLongitude });
-          SArray.push({ lat: SLatitude, lng: SLongitude });
+          if (FLatitude && FLongitude) {
+            FArray.push({ lat: FLatitude, lng: FLongitude });
+          }
+          if (CLatitude && CLongitude) {
+            CArray.push({ lat: CLatitude, lng: CLongitude });
+          }
+          if (SLatitude && SLongitude) {
+            SArray.push({ lat: SLatitude, lng: SLongitude });
+          }
         }
         that.FArrayObj = FArray;
         that.CArrayObj = CArray;
         that.SArrayObj = SArray;
-        console.log("array object");
-        console.log(that.FArrayObj);
-        console.log(that.CArrayObj);
-        console.log(that.SArrayObj);
       }
 
       function errData(err) {
         console.log("Error");
         console.log(err);
       }
+      console.log(that.FArrayObj);
+      console.log(that.CArrayObj);
+      console.log(that.SArrayObj);
     }
   },
 

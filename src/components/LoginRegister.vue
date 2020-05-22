@@ -23,7 +23,9 @@
       unelevated 
       rounded color="primary" 
       type="submit"
-      :label="tab" />
+      :label="tab" 
+      />
+      
     </div>
   </q-form>
 </template>

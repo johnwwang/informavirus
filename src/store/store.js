@@ -57,8 +57,7 @@ const actions = {
         })
         // IF SOMETHING IS WRONG WITH HANDLAUTHSTATECHANGED, MOVE this.$routerpush('/')
         // BELOW console.log('snapshot', snapshot)
-        this.$router.push('/')
-        // .catch(error => {console.log(error.message)})
+          this.$router.push('/')
       }
       else {
         //user is logged out

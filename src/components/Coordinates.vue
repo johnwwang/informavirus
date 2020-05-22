@@ -1,6 +1,4 @@
 <template>
-  <q-card>
-    <template>
       <div 
         v-if="this.trackingF == 'true' || this.trackingC == 'true' || this.trackingS == 'true'" 
         class="text-center">
@@ -24,13 +22,10 @@
           type="submit"
           label="Add Coordinate"
         />
-        <br />
       </div>
       <div v-else class="text-center">
         <h4>Heatmap of symptoms (you are not being tracked)</h4>
       </div>
-    </template>
-  </q-card>
 </template>
 
 <script>
@@ -50,19 +45,24 @@ export default {
   data() {
     return {
       position: "determining...",
-      coordObj: {
+      FCoordObj: {
         userId: "",
         FLatitude: "",
         FLongitude: "",
+      },
+      CCoordObj: {
+        userId: "",
         CLatitude: "",
         CLongitude: "",
+      },
+      SCoordObj:{
+        userId: "",
         SLatitude: "",
         SLongitude: "",
       }
     };
   },
   methods: {
-    // ...mapActions('locationStore', ['changeCoord']),
     getCurrentPosition() {
       if (this.trackingF == "true" || this.trackingC == "true" || this.trackingS == "true") {
         Geolocation.getCurrentPosition().then(position => {
@@ -72,11 +72,16 @@ export default {
       }
     },
     addCoords() {
-      if (this.trackingF == "true" || this.trackingC == "true" || this.trackingS == "true") {
-        coordinatesRef.push(this.coordObj);
-      } else {
-        alert("not tracking!");
+      if (this.trackingF == "true") {
+        coordinatesRef.push(this.FCoordObj);
       }
+      if (this.trackingC == "true") {
+        coordinatesRef.push(this.CCoordObj);
+      }
+      if (this.trackingS == "true") {
+        coordinatesRef.push(this.SCoordObj);
+      }
+      console.log("hello")
     }
   },
 
@@ -93,13 +98,16 @@ export default {
 
           // TURN ON TO ADD TO DATABASE
           // coordinatesRef.push(this.coordObj)
-          this.coordObj.FLatitude = position.coords.latitude;
-          this.coordObj.FLongitude = position.coords.longitude;
-          this.coordObj.CLatitude = position.coords.latitude;
-          this.coordObj.CLongitude = position.coords.longitude;
-          this.coordObj.SLatitude = position.coords.latitude;
-          this.coordObj.SLongitude = position.coords.longitude;
-          this.coordObj.userId = firebaseAuth.currentUser.uid;
+          this.FCoordObj.FLatitude = position.coords.latitude;
+          this.FCoordObj.FLongitude = position.coords.longitude;
+          this.FCoordObj.userId = firebaseAuth.currentUser.uid;
+          this.CCoordObj.CLatitude = position.coords.latitude;
+          this.CCoordObj.CLongitude = position.coords.longitude;
+          this.CCoordObj.userId = firebaseAuth.currentUser.uid;
+          this.SCoordObj.SLatitude = position.coords.latitude;
+          this.SCoordObj.SLongitude = position.coords.longitude;
+          this.SCoordObj.userId = firebaseAuth.currentUser.uid;
+          
         }
       );
     }

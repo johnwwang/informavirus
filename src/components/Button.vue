@@ -8,7 +8,6 @@
 
 
   <div class="q-pa-md" style="max-width: 600px">
-    <q-card>
       <q-tabs
         v-model="tab"
         dense
@@ -79,7 +78,7 @@
           </q-splitter>
         </q-tab-panel>
         <!--  -->
-        <q-tab-panel name="cough">
+        <q-tab-panel name="cough" class="q-pa-none">
           <q-splitter
             v-model="splitterModel"
             style="height: 250px">
@@ -133,7 +132,7 @@
           </q-splitter>
         </q-tab-panel>
         <!--  -->
-        <q-tab-panel name="shivers">
+        <q-tab-panel name="shivers" class="q-pa-none">
           <q-splitter
             v-model="splitterModel"
             style="height: 250px">
@@ -188,10 +187,29 @@
           </q-splitter>
         </q-tab-panel>
       </q-tab-panels>
-    </q-card>
   </div>
 
+  <div class="q-pa-md absolute-bottom-right">
+    <q-btn 
+    round 
+    icon="help_outline" 
+    size="20px"
+    color="grey"/>
+  </div>
 
+  <div class="q-pa-md q-gutter-md absolute-bottom-right" style="font-size: 36px">
+      <q-icon  class="text-purple cursor-pointer">
+      <q-popup-proxy :offset="[10, 10]">
+        <q-banner class="bg-purple text-white">
+          <template v-slot:avatar>
+            <q-icon/>
+          </template>
+            Your coordinates will ONLY be used for a plot on our heat map. Your name and information is NOT attatched to your coordinates.
+        </q-banner>
+      </q-popup-proxy>
+    </q-icon>
+      
+  </div>
  
   </q-page>
 </template>

@@ -12,7 +12,7 @@
     <q-btn
       color="secondary"
       style="width:200px;"
-      to="/"
+      to='/'
       label="Go back"
     />
   </div>

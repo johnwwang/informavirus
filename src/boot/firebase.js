@@ -6,10 +6,12 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
 
+<script type='text/javascript' src='config.js'></script>
 
+var mykey = config.API_KEY;
 // Your web app's Firebase configuration
 var firebaseConfig = {
-  apiKey: "AIzaSyARopibwAQzw5eeaWIQcH7No4XSpzy0CIA",
+  apiKey: mykey,
   authDomain: "informavirus-8b544.firebaseapp.com",
   databaseURL: "https://informavirus-8b544.firebaseio.com",
   projectId: "informavirus-8b544",

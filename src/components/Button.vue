@@ -192,7 +192,7 @@
             <template v-slot:avatar>
               <q-icon />
             </template>
-            Your coordinates will ONLY be used for a plot on our heat map. Your name and information is NOT attatched to your coordinates.
+            Your coordinates will ONLY be used for a plot on our heat map. Your name and information are NOT attatched to your coordinates.
           </q-banner>
         </q-popup-proxy>
       </q-icon>

@@ -31,7 +31,12 @@ const actions = {
   loginUser({}, payload) {
      firebaseAuth.signInWithEmailAndPassword(payload.email, payload.password)
      .then(response => {
-       console.log(response)
+      console.log(response)
+      let userId = firebaseAuth.currentUser.uid
+      firebaseDb.ref('users/' + userId).set({
+        name: payload.name,
+        email: payload.email
+      })
        this.$router.push('/buttons')
      })
      .catch(error => {

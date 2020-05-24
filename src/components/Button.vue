@@ -15,8 +15,8 @@
         v-model="tab"
         dense
         class="text-grey"
-        active-color="primary"
-        indicator-color="primary"
+        active-color="teal"
+        indicator-color="teal"
         align="justify"
       >
         <q-tab name="fever" label="Fever" />

@@ -2,11 +2,12 @@
   <q-page class="flex q-pa-md">
   	<q-card class="full-width">
       <q-tabs
+        
         v-model="tab"
         dense
         class="text-grey"
-        active-color="primary" 
-        indicator-color="primary"
+        active-color="teal" 
+        indicator-color="teal"
         align="justify"
         narrow-indicator
       >

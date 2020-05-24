@@ -32,7 +32,7 @@ const actions = {
      firebaseAuth.signInWithEmailAndPassword(payload.email, payload.password)
      .then(response => {
        console.log(response)
-       this.$router.push('/')
+       this.$router.push('/buttons')
      })
      .catch(error => {
       console.log(error.message);

@@ -21,7 +21,7 @@
     <div align="center">
       <q-btn 
       unelevated 
-      rounded color="primary" 
+      rounded color="teal" 
       type="submit"
       :label="tab" 
       />
